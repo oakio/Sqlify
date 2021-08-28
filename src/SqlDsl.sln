@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{CAB2CD87-DAD9-42D8-9D9C-6C143310BF99}") = "SqlDsl", "SqlDsl\SqlDsl.csproj", "{E3D12B99-43FF-4112-AFDB-78BD4282B924}"
+EndProject
+Project("{CAB2CD87-DAD9-42D8-9D9C-6C143310BF99}") = "SqlDsl.Tests", "SqlDsl.Tests\SqlDsl.Tests.csproj", "{299131B0-CD5C-4FAA-91CF-2F02D6FDD164}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3D12B99-43FF-4112-AFDB-78BD4282B924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3D12B99-43FF-4112-AFDB-78BD4282B924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3D12B99-43FF-4112-AFDB-78BD4282B924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3D12B99-43FF-4112-AFDB-78BD4282B924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{299131B0-CD5C-4FAA-91CF-2F02D6FDD164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{299131B0-CD5C-4FAA-91CF-2F02D6FDD164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{299131B0-CD5C-4FAA-91CF-2F02D6FDD164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{299131B0-CD5C-4FAA-91CF-2F02D6FDD164}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

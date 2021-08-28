@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Authors>Ilya Dubadenko</Authors>
+    <Description>Fluent SQL builder</Description>
+    <Copyright>Copyright (c) 2021</Copyright>
+    <PackageId>SqlDsl</PackageId>
+    <PackageProjectUrl>https://github.com/oakio/sqldsl</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/oakio/sqldsl</RepositoryUrl>
+    <AssemblyName>SqlDsl</AssemblyName>
+    <RootNamespace>SqlDsl</RootNamespace>
+    <NoWarn>7035;1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Codestellation.Cepheid" Version="0.1.6" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>
