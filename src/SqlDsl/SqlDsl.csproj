@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
@@ -6,6 +6,7 @@
     <Description>Fluent SQL builder</Description>
     <Copyright>Copyright (c) 2021</Copyright>
     <PackageId>SqlDsl</PackageId>
+    <PackageTags>sqlbuilder;fluentsql;sql</PackageTags>
     <PackageProjectUrl>https://github.com/oakio/sqldsl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/oakio/sqldsl</RepositoryUrl>
     <AssemblyName>SqlDsl</AssemblyName>
