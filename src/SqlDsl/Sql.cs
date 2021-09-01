@@ -1,3 +1,4 @@
+using SqlDsl.Core;
 using SqlDsl.Core.Expressions;
 
 namespace SqlDsl
@@ -15,6 +16,8 @@ namespace SqlDsl
         public static UpdateSqlQuery Update(Table table) => new UpdateSqlQuery(table);
 
         public static DeleteSqlQuery Delete(Table table) => new DeleteSqlQuery(table);
+
+        public static MultipleSqlQuery Multiple(params ISelectSqlQuery[] queries) => new MultipleSqlQuery(queries);
 
         public static FunctionExpression<int> Count() => new FunctionExpression<int>("COUNT", ColumnExpression<int>.Asterisk);
 

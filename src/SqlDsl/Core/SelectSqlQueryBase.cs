@@ -5,7 +5,7 @@ using SqlDsl.Core.Predicates;
 
 namespace SqlDsl.Core
 {
-    public class SelectSqlQueryBase<TSqlQuery> : ISqlQuery where TSqlQuery : SelectSqlQueryBase<TSqlQuery>, new()
+    public class SelectSqlQueryBase<TSqlQuery> : ISelectSqlQuery where TSqlQuery : SelectSqlQueryBase<TSqlQuery>, new()
     {
         private UnionQuery<TSqlQuery> _unionQuery;
 

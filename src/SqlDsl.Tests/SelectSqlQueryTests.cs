@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SqlDsl.Core;
 
 namespace SqlDsl.Tests
 {
@@ -654,6 +655,21 @@ namespace SqlDsl.Tests
                 .From(u);
 
             query.ShouldBe("SELECT SUM(u.age) + @p1 FROM users u");
+        }
+
+        [Test]
+        public void Multiple_Select_from_table()
+        {
+            var a = new AuthorsTable();
+            var b = new BooksTable();
+
+            MultipleSqlQuery query = Sql
+                .Multiple(
+                    Sql.Select().From(a),
+                    Sql.Select().From(b)
+                );
+
+            query.ShouldBe("SELECT * FROM authors; SELECT * FROM books");
         }
     }
 }

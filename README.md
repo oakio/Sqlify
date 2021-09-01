@@ -13,6 +13,7 @@ Fluent SQL builder library.
 * `LIKE`, `EXISTS`, `IN`, `BETWEEN` predicates
 * `COUNT`, `SUM`, `MAX`, `MIN`, `AVG` functions
 * `UNION` queries
+* Multiple queries
 * Table and Column aliases
 * SQL injections free
 * Strongly typed (checked at compile time)
@@ -34,6 +35,7 @@ Fluent SQL builder library.
     * [`ORDER BY`](#order-by-clause) clause
     * [`GROUP BY`](#group-by-clause) clause
     * [`HAVING`](#having-clause) clause
+    * [Multiple](#multiple-queries) queries
 * [`DELETE`](#delete-query) query
 * [`INSERT`](#insert-query) query
 * [`UPDATE`](#update-query) query
@@ -256,6 +258,19 @@ var query = Sql
     .From(b);
 
 // SELECT author_id, COUNT(*) FROM books GROUP BY author_id
+```
+[up &#8593;](#examples)
+## Multiple queries
+```csharp
+var a = new AuthorsTable();
+var b = new BooksTable();
+MultipleSqlQuery query = Sql
+    .Multiple(
+        Sql.Select().From(a),
+        Sql.Select().From(b)
+    );
+    
+// SELECT * FROM authors; SELECT * FROM books        
 ```
 [up &#8593;](#examples)
 ## HAVING clause
