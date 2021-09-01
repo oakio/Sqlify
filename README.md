@@ -16,6 +16,7 @@ Fluent SQL builder library.
 * Multiple queries
 * Table and Column aliases
 * SQL injections free
+* Partial `PostgreSQL` dialect support
 * Strongly typed (checked at compile time)
 * GC friendly
 
@@ -39,6 +40,9 @@ Fluent SQL builder library.
 * [`DELETE`](#delete-query) query
 * [`INSERT`](#insert-query) query
 * [`UPDATE`](#update-query) query
+
+* `PostreSQL` dialect
+    * [`OFFSET` and `LIMIT`](#postgresql-offset-and-limit-clauses) clauses
 
 As an example, consider the following database schema (`authors` and `books` tables with one-to-many relationship):
 ```sql
@@ -315,6 +319,19 @@ var query = Sql
     .Where(b.AuthorId == 1);
 
 // UPDATE books SET rating = rating + @p1 WHERE author_id = @p2
+```
+[up &#8593;](#examples)
+## PostgreSQL OFFSET and LIMIT clauses
+```csharp
+var a = new AuthorsTable()
+PgSelectSqlQuery query = PgSql
+    .Select()
+    .From(a)
+    .OrderBy(a.Name)
+    .Offset(5)
+    .Limit(10)
+
+// SELECT * FROM authors ORDER BY name OFFSET @p1 LIMIT @p2
 ```
 [up &#8593;](#examples)
 
