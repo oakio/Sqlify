@@ -11,5 +11,7 @@ namespace SqlDsl.Postgres
         public static PgSelectQuery<T> Select<T>(Expression<T> column) => new PgSelectQuery<T>().Select(column);
 
         public static PgInsertQuery Insert(Table table) => new PgInsertQuery(table);
+
+        public static PgUpdateQuery Update(Table table) => new PgUpdateQuery(table);
     }
 }

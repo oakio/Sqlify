@@ -44,6 +44,7 @@ Fluent SQL builder library.
 * `PostreSQL` dialect
     * [`OFFSET` and `LIMIT`](#postgresql-offset-and-limit-clauses) clauses
     * [`UPDATE RETURNING`](#postgresql-update-returning-clause) clause
+    * [`INSERT RETURNING`](#postgresql-insert-returning-clause) clause
 
 As an example, consider the following database schema (`authors` and `books` tables with one-to-many relationship):
 ```sql
@@ -345,6 +346,18 @@ PgUpdateQuery query = PgSql
 
 // UPDATE books SET rating = rating + @p1 RETURNING id, rating
 ```
+[up &#8593;](#examples)
+## PostgreSQL INSERT RETURNING clause
+```csharp
+var b = new BooksTable();
+PgInsertQuery query = PgSql
+    .Insert(b)
+    .Values(b.Name, "name")
+    .Returning();
+
+// INSERT INTO books (name) VALUES (@p1) RETURNING *
+```
+[up &#8593;](#examples)
 
 # How to build
 ```bash
