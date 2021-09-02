@@ -3,14 +3,14 @@ using NUnit.Framework;
 namespace SqlDsl.Tests
 {
     [TestFixture]
-    public class DeleteSqlQueryTests
+    public class DeleteQueryTests
     {
         [Test]
         public void Delete_from_table()
         {
             var u = new UsersTable();
 
-            DeleteSqlQuery query = Sql
+            DeleteQuery query = Sql
                 .Delete(u);
 
             query.ShouldBe("DELETE FROM users");
@@ -21,7 +21,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            DeleteSqlQuery query = Sql
+            DeleteQuery query = Sql
                 .Delete(u);
 
             query.ShouldBe("DELETE u FROM users u");
@@ -32,7 +32,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            DeleteSqlQuery query = Sql
+            DeleteQuery query = Sql
                 .Delete(u)
                 .Where(u.Id == 0);
 
@@ -44,7 +44,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            DeleteSqlQuery query = Sql
+            DeleteQuery query = Sql
                 .Delete(u)
                 .Where(u.Id == 0);
 
@@ -56,7 +56,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            DeleteSqlQuery query = Sql
+            DeleteQuery query = Sql
                 .Delete(b)
                 .Join(a, a.Id == b.AuthorId);
 
@@ -69,7 +69,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            DeleteSqlQuery query = Sql
+            DeleteQuery query = Sql
                 .Delete(b)
                 .WhereExists(Sql.Select().From(a).Where(a.Id == b.AuthorId));
 
@@ -82,7 +82,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            DeleteSqlQuery query = Sql
+            DeleteQuery query = Sql
                 .Delete(b)
                 .WhereNotExists(Sql.Select().From(a).Where(a.Id == b.AuthorId));
 
@@ -95,7 +95,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            DeleteSqlQuery query = Sql
+            DeleteQuery query = Sql
                 .Delete(b)
                 .Join(a, a.Id == b.AuthorId)
                 .Where(a.Name == "");

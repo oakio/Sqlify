@@ -4,10 +4,10 @@ namespace SqlDsl.Postgres
 {
     public static class PgSql
     {
-        public static PgSelectSqlQuery Select() => new PgSelectSqlQuery();
+        public static PgSelectQuery Select() => new PgSelectQuery();
 
-        public static PgSelectSqlQuery Select(params Expression[] columns) => new PgSelectSqlQuery().Select(columns);
+        public static PgSelectQuery Select(params Expression[] columns) => new PgSelectQuery().Select(columns);
 
-        public static PgSelectSqlQuery<T> Select<T>(Expression<T> column) => new PgSelectSqlQuery<T>().Select(column);
+        public static PgSelectQuery<T> Select<T>(Expression<T> column) => new PgSelectQuery<T>().Select(column);
     }
 }

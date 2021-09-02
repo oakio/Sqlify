@@ -3,14 +3,14 @@ using NUnit.Framework;
 namespace SqlDsl.Tests
 {
     [TestFixture]
-    public class InsertSqlQueryTests
+    public class InsertQueryTests
     {
         [Test]
         public void Insert_into_table()
         {
             var u = new UsersTable();
 
-            InsertSqlQuery query = Sql
+            InsertQuery query = Sql
                 .Insert(u)
                 .Values(u.Name, "name")
                 .Values(u.Age, 10);

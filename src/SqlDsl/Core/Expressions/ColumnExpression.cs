@@ -16,9 +16,9 @@ namespace SqlDsl.Core.Expressions
 
         public PredicateExpression NotIn(IReadOnlyCollection<T> items) => new NotInExpression<T>(this, items);
 
-        public PredicateExpression In(SelectSqlQuery<T> query) => new InSubQueryExpression<T>(this, query);
+        public PredicateExpression In(SelectQuery<T> query) => new InSubQueryExpression<T>(this, query);
 
-        public PredicateExpression NotIn(SelectSqlQuery<T> query) => new NotInSubQueryExpression<T>(this, query);
+        public PredicateExpression NotIn(SelectQuery<T> query) => new NotInSubQueryExpression<T>(this, query);
 
         public PredicateExpression Between(T from, T to) => new BetweenExpression<T>(this, from, to);
 

@@ -10,9 +10,9 @@ namespace SqlDsl.Tests.Core.Predicates
         public void Test()
         {
             var u = new UsersTable();
-            SelectSqlQuery query = Sql.Select().From(u);
+            SelectQuery query = Sql.Select().From(u);
 
-            var expression = new ExistsExpression<SelectSqlQuery>(query);
+            var expression = new ExistsExpression<SelectQuery>(query);
 
             expression.ShouldBe("EXISTS (SELECT * FROM users)");
         }

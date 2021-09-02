@@ -2,7 +2,7 @@ namespace SqlDsl.Core.Clauses
 {
     public readonly struct FromClause : ISqlFormattable
     {
-        private readonly ISqlQuery _nested;
+        private readonly ISelectQuery _nested;
         private readonly Table _alias;
         private readonly Table _table;
 
@@ -13,7 +13,7 @@ namespace SqlDsl.Core.Clauses
             _alias = null;
         }
 
-        public FromClause(ISqlQuery nested, Table alias)
+        public FromClause(ISelectQuery nested, Table alias)
         {
             _nested = nested;
             _alias = alias;

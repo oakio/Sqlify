@@ -3,18 +3,18 @@ using SqlDsl.Postgres.Clauses;
 
 namespace SqlDsl.Postgres
 {
-    public abstract class PgSelectSqlQueryBase<TSqlQuery> : SelectSqlQueryBase<TSqlQuery> where TSqlQuery : SelectSqlQueryBase<TSqlQuery>, new()
+    public abstract class PgSelectQueryBase<TSelectQuery> : SelectQueryBase<TSelectQuery> where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
     {
         private OffsetClause? _offsetClause;
         private LimitClause? _limitClause;
 
-        public TSqlQuery Offset(int offset)
+        public TSelectQuery Offset(int offset)
         {
             _offsetClause = new OffsetClause(offset);
             return Self();
         }
 
-        public TSqlQuery Limit(int limit)
+        public TSelectQuery Limit(int limit)
         {
             _limitClause = new LimitClause(limit);
             return Self();

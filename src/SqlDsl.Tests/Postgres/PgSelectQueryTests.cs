@@ -4,14 +4,14 @@ using SqlDsl.Postgres;
 namespace SqlDsl.Tests.Postgres
 {
     [TestFixture]
-    public class PgSelectSqlQueryTests
+    public class PgSelectQueryTests
     {
         [Test]
         public void Select_from_table_with_limit()
         {
             var u = new UsersTable();
 
-            PgSelectSqlQuery query = PgSql
+            PgSelectQuery query = PgSql
                 .Select()
                 .From(u)
                 .OrderBy(u.Name)
@@ -25,7 +25,7 @@ namespace SqlDsl.Tests.Postgres
         {
             var u = new UsersTable();
 
-            PgSelectSqlQuery query = PgSql
+            PgSelectQuery query = PgSql
                 .Select()
                 .From(u)
                 .OrderBy(u.Name)
@@ -39,7 +39,7 @@ namespace SqlDsl.Tests.Postgres
         {
             var u = new UsersTable();
 
-            PgSelectSqlQuery query = PgSql
+            PgSelectQuery query = PgSql
                 .Select()
                 .From(u)
                 .OrderBy(u.Name)

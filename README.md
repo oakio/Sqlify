@@ -268,7 +268,7 @@ var query = Sql
 ```csharp
 var a = new AuthorsTable();
 var b = new BooksTable();
-MultipleSqlQuery query = Sql
+MultipleQuery query = Sql
     .Multiple(
         Sql.Select().From(a),
         Sql.Select().From(b)
@@ -324,7 +324,7 @@ var query = Sql
 ## PostgreSQL OFFSET and LIMIT clauses
 ```csharp
 var a = new AuthorsTable()
-PgSelectSqlQuery query = PgSql
+PgSelectQuery query = PgSql
     .Select()
     .From(a)
     .OrderBy(a.Name)

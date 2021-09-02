@@ -5,9 +5,9 @@ using SqlDsl.Core.Predicates;
 
 namespace SqlDsl.Core
 {
-    public class SelectSqlQueryBase<TSqlQuery> : ISelectSqlQuery where TSqlQuery : SelectSqlQueryBase<TSqlQuery>, new()
+    public class SelectQueryBase<TSelectQuery> : ISelectQuery where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
     {
-        private UnionQuery<TSqlQuery> _unionQuery;
+        private UnionQuery<TSelectQuery> _unionQuery;
 
         private bool _distinct;
         private List<Expression> _selectClause;
@@ -18,37 +18,37 @@ namespace SqlDsl.Core
         private List<Expression> _groupByClause;
         private PredicateExpression _havingClause;
 
-        protected TSqlQuery SelectColumn(Expression column)
+        protected TSelectQuery SelectColumn(Expression column)
         {
             ListUtils.Add(ref _selectClause, column);
             return Self();
         }
 
-        protected TSqlQuery SelectColumns(Expression[] columns)
+        protected TSelectQuery SelectColumns(Expression[] columns)
         {
             ListUtils.AddRange(ref _selectClause, columns);
             return Self();
         }
 
-        public TSqlQuery Distinct()
+        public TSelectQuery Distinct()
         {
             _distinct = true;
             return Self();
         }
 
-        public TSqlQuery From<T>(T table) where T : Table
+        public TSelectQuery From<T>(T table) where T : Table
         {
             _fromClause = new FromClause(table);
             return Self();
         }
 
-        public TSqlQuery From<T>(ISqlQuery nested, T alias) where T : Table
+        public TSelectQuery From<T>(ISelectQuery nested, T alias) where T : Table
         {
             _fromClause = new FromClause(nested, alias);
             return Self();
         }
 
-        public TSqlQuery Where(PredicateExpression condition)
+        public TSelectQuery Where(PredicateExpression condition)
         {
             _whereClause = _whereClause == null
                 ? condition
@@ -56,70 +56,70 @@ namespace SqlDsl.Core
             return Self();
         }
 
-        public TSqlQuery WhereExists<TSqlSubQuery>(TSqlSubQuery query) where TSqlSubQuery : SelectSqlQueryBase<TSqlSubQuery>, new()
+        public TSelectQuery WhereExists<TSubQuery>(TSubQuery query) where TSubQuery : SelectQueryBase<TSubQuery>, new()
         {
-            var condition = new ExistsExpression<TSqlSubQuery>(query);
+            var condition = new ExistsExpression<TSubQuery>(query);
             return Where(condition);
         }
 
-        public TSqlQuery WhereNotExists<TSqlSubQuery>(TSqlSubQuery query) where TSqlSubQuery : SelectSqlQueryBase<TSqlSubQuery>, new()
+        public TSelectQuery WhereNotExists<TSubQuery>(TSubQuery query) where TSubQuery : SelectQueryBase<TSubQuery>, new()
         {
-            var condition = new NotExistsExpression<TSqlSubQuery>(query);
+            var condition = new NotExistsExpression<TSubQuery>(query);
             return Where(condition);
         }
 
-        public TSqlQuery LeftJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" LEFT JOIN ", table, condition);
+        public TSelectQuery LeftJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" LEFT JOIN ", table, condition);
 
-        public TSqlQuery RightJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" RIGHT JOIN ", table, condition);
+        public TSelectQuery RightJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" RIGHT JOIN ", table, condition);
 
-        public TSqlQuery Join<T>(T table, PredicateExpression condition) where T : Table => Join(" JOIN ", table, condition);
+        public TSelectQuery Join<T>(T table, PredicateExpression condition) where T : Table => Join(" JOIN ", table, condition);
 
-        public TSqlQuery FullJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" FULL JOIN ", table, condition);
+        public TSelectQuery FullJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" FULL JOIN ", table, condition);
 
-        private TSqlQuery Join<T>(string type, T table, PredicateExpression condition) where T : Table
+        private TSelectQuery Join<T>(string type, T table, PredicateExpression condition) where T : Table
         {
             var join = new JoinClause(type, table, condition);
             ListUtils.Add(ref _joinClauses, join);
             return Self();
         }
 
-        public TSqlQuery Having(PredicateExpression condition)
+        public TSelectQuery Having(PredicateExpression condition)
         {
             _havingClause = condition;
             return Self();
         }
 
-        public TSqlQuery GroupBy<T>(ColumnExpression<T> column)
+        public TSelectQuery GroupBy<T>(ColumnExpression<T> column)
         {
             ListUtils.Add(ref _groupByClause, column);
             return Self();
         }
 
-        public TSqlQuery OrderBy<T>(Expression<T> expression)
+        public TSelectQuery OrderBy<T>(Expression<T> expression)
         {
             var orderBy = new OrderByClause(expression, false);
             ListUtils.Add(ref _orderByClause, orderBy);
             return Self();
         }
 
-        public TSqlQuery OrderByDesc<T>(Expression<T> expression)
+        public TSelectQuery OrderByDesc<T>(Expression<T> expression)
         {
             var orderBy = new OrderByClause(expression, true);
             ListUtils.Add(ref _orderByClause, orderBy);
             return Self();
         }
 
-        public TSqlQuery Union() => Union(false);
+        public TSelectQuery Union() => Union(false);
 
-        public TSqlQuery UnionAll() => Union(true);
+        public TSelectQuery UnionAll() => Union(true);
 
-        private TSqlQuery Union(bool all)
+        private TSelectQuery Union(bool all)
         {
-            TSqlQuery self = Self();
-            var newQuery = new TSqlQuery();
+            TSelectQuery self = Self();
+            var newQuery = new TSelectQuery();
 
-            var newQueryBase = newQuery as SelectSqlQueryBase<TSqlQuery>;
-            newQueryBase._unionQuery = new UnionQuery<TSqlQuery>(self, all);
+            var newQueryBase = newQuery as SelectQueryBase<TSelectQuery>;
+            newQueryBase._unionQuery = new UnionQuery<TSelectQuery>(self, all);
 
             return newQuery;
         }
@@ -151,6 +151,6 @@ namespace SqlDsl.Core
             _fromClause.Format(sql);
         }
 
-        protected TSqlQuery Self() => this as TSqlQuery;
+        protected TSelectQuery Self() => this as TSelectQuery;
     }
 }

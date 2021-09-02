@@ -3,14 +3,14 @@ using NUnit.Framework;
 namespace SqlDsl.Tests
 {
     [TestFixture]
-    public class UpdateSqlQueryTests
+    public class UpdateQueryTests
     {
         [Test]
         public void Update_table_set_column_value()
         {
             var u = new UsersTable();
 
-            UpdateSqlQuery query = Sql
+            UpdateQuery query = Sql
                 .Update(u)
                 .Set(u.Age, 20);
 
@@ -22,7 +22,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            UpdateSqlQuery query = Sql
+            UpdateQuery query = Sql
                 .Update(u)
                 .Set(u.Age, u.Age + 1);
 
@@ -34,7 +34,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            UpdateSqlQuery query = Sql
+            UpdateQuery query = Sql
                 .Update(u)
                 .Set(u.Age, u.Age);
 
@@ -46,7 +46,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            UpdateSqlQuery query = Sql
+            UpdateQuery query = Sql
                 .Update(u)
                 .Set(u.Age, u.Age + u.Age);
 
@@ -58,7 +58,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            UpdateSqlQuery query = Sql
+            UpdateQuery query = Sql
                 .Update(u)
                 .Set(u.Age, 10)
                 .Where(u.Age == 10);

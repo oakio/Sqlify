@@ -3,14 +3,14 @@ using SqlDsl.Core;
 
 namespace SqlDsl.Tests
 {
-    public class SelectSqlQueryTests
+    public class SelectQueryTests
     {
         [Test]
         public void Select_from_table()
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u);
 
@@ -22,7 +22,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u);
 
@@ -34,7 +34,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<string> query = Sql
+            SelectQuery<string> query = Sql
                 .Select(u.Name)
                 .From(u);
 
@@ -46,7 +46,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<string> query = Sql
+            SelectQuery<string> query = Sql
                 .Select(u.Name)
                 .From(u);
 
@@ -58,7 +58,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<string> query = Sql
+            SelectQuery<string> query = Sql
                 .Select(u.Name)
                 .Distinct()
                 .From(u);
@@ -71,7 +71,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<string> query = Sql
+            SelectQuery<string> query = Sql
                 .Select(u.Name)
                 .Distinct()
                 .From(u);
@@ -84,7 +84,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Max(u.Age))
                 .From(u);
 
@@ -96,7 +96,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Max(u.Age))
                 .From(u);
 
@@ -108,7 +108,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Min(u.Age))
                 .From(u);
 
@@ -120,7 +120,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Min(u.Age))
                 .From(u);
 
@@ -132,7 +132,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Avg(u.Age))
                 .From(u);
 
@@ -144,7 +144,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Avg(u.Age))
                 .From(u);
 
@@ -156,7 +156,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age))
                 .From(u);
 
@@ -168,7 +168,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age))
                 .From(u);
 
@@ -180,7 +180,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .OrderBy(u.Name)
@@ -194,7 +194,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .OrderBy(u.Name)
@@ -208,7 +208,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .GroupBy(u.Name);
@@ -221,7 +221,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .GroupBy(u.Name);
@@ -234,7 +234,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select(u.Name, Sql.Count())
                 .From(u)
                 .GroupBy(u.Name)
@@ -248,7 +248,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where((u.Age > 30).And(u.Name == "John"));
@@ -261,7 +261,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where((u.Age > 30).And(u.Name == "John"));
@@ -274,7 +274,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where(u.Name.In(new[] {"John", "Adam"}));
@@ -287,7 +287,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where(u.Name.NotIn(new[] { "John", "Adam" }));
@@ -300,7 +300,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where(u.Age.Between(30, 50));
@@ -313,7 +313,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where(u.Name.Like("A%"));
@@ -327,7 +327,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(a)
                 .LeftJoin(b, b.AuthorId == a.Id);
@@ -341,7 +341,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(a)
                 .RightJoin(b, b.AuthorId == a.Id);
@@ -355,7 +355,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(a)
                 .Join(b, b.AuthorId == a.Id);
@@ -369,7 +369,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(a)
                 .FullJoin(b, b.AuthorId == a.Id);
@@ -382,7 +382,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(u.Id)
                 .From(Sql
                         .Select()
@@ -399,7 +399,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(a)
                 .Where(a.Id.In(Sql.Select(b.AuthorId).From(b).Where(b.Rating > 3)));
@@ -413,7 +413,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(a)
                 .Where(a.Id.NotIn(Sql.Select(b.AuthorId).From(b).Where(b.Rating > 3)));
@@ -427,7 +427,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(a)
                 .WhereExists(Sql.Select().From(b).Where((a.Id == b.AuthorId).And(b.Rating > 3)));
@@ -441,7 +441,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable("a");
             var b = new BooksTable("b");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(a)
                 .WhereNotExists(Sql.Select().From(b).Where((a.Id == b.AuthorId).And(b.Rating > 3)));
@@ -454,7 +454,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where(u.Name.IsNull);
@@ -467,7 +467,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where(u.Name.IsNotNull);
@@ -480,7 +480,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(u.Id.As("UserId"))
                 .From(u);
 
@@ -492,7 +492,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(u.Id.As("UserId"))
                 .From(u);
 
@@ -504,7 +504,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Max(u.Age).As("max_age"))
                 .From(u);
 
@@ -516,7 +516,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Max(u.Age).As("max_age"))
                 .From(u);
 
@@ -528,7 +528,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select()
                 .From(u)
                 .Where(u.Age < 20)
@@ -545,7 +545,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(u.Id)
                 .From(u)
                 .Where(u.Age < 20)
@@ -562,7 +562,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select(u.Name, Sql.Count())
                 .From(u)
                 .GroupBy(u.Name)
@@ -576,7 +576,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery query = Sql
+            SelectQuery query = Sql
                 .Select(u.Name, Sql.Count())
                 .From(u)
                 .GroupBy(u.Name)
@@ -590,7 +590,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(u.Age + 10)
                 .From(u);
 
@@ -602,7 +602,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(u.Age + 10)
                 .From(u);
 
@@ -614,7 +614,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age + 1))
                 .From(u);
 
@@ -626,7 +626,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age + 1))
                 .From(u);
 
@@ -638,7 +638,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable();
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age) + 1)
                 .From(u);
 
@@ -650,7 +650,7 @@ namespace SqlDsl.Tests
         {
             var u = new UsersTable("u");
 
-            SelectSqlQuery<int> query = Sql
+            SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age) + 1)
                 .From(u);
 
@@ -663,7 +663,7 @@ namespace SqlDsl.Tests
             var a = new AuthorsTable();
             var b = new BooksTable();
 
-            MultipleSqlQuery query = Sql
+            MultipleQuery query = Sql
                 .Multiple(
                     Sql.Select().From(a),
                     Sql.Select().From(b)

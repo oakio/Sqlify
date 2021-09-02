@@ -5,18 +5,18 @@ using SqlDsl.Core.Predicates;
 
 namespace SqlDsl
 {
-    public class DeleteSqlQuery : ISqlQuery
+    public class DeleteQuery : IQuery
     {
         private readonly Table _table;
         private List<JoinClause> _joinClauses;
         private PredicateExpression _whereClause;
 
-        public DeleteSqlQuery(Table table)
+        public DeleteQuery(Table table)
         {
             _table = table;
         }
 
-        public DeleteSqlQuery Where(PredicateExpression condition)
+        public DeleteQuery Where(PredicateExpression condition)
         {
             _whereClause = _whereClause == null
                 ? condition
@@ -24,19 +24,19 @@ namespace SqlDsl
             return this;
         }
 
-        public DeleteSqlQuery WhereExists<TSqlSelectQuery>(TSqlSelectQuery query) where TSqlSelectQuery : SelectSqlQueryBase<TSqlSelectQuery>, new()
+        public DeleteQuery WhereExists<TSelectQuery>(TSelectQuery query) where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
         {
-            var condition = new ExistsExpression<TSqlSelectQuery>(query);
+            var condition = new ExistsExpression<TSelectQuery>(query);
             return Where(condition);
         }
 
-        public DeleteSqlQuery WhereNotExists<TSqlSelectQuery>(TSqlSelectQuery query) where TSqlSelectQuery : SelectSqlQueryBase<TSqlSelectQuery>, new()
+        public DeleteQuery WhereNotExists<TSelectQuery>(TSelectQuery query) where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
         {
-            var condition = new NotExistsExpression<TSqlSelectQuery>(query);
+            var condition = new NotExistsExpression<TSelectQuery>(query);
             return Where(condition);
         }
 
-        public DeleteSqlQuery Join<T>(T table, PredicateExpression condition) where T : Table
+        public DeleteQuery Join<T>(T table, PredicateExpression condition) where T : Table
         {
             var join = new JoinClause(" JOIN ", table, condition);
             ListUtils.Add(ref _joinClauses, join);

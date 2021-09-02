@@ -1,14 +1,14 @@
 namespace SqlDsl.Core
 {
-    public class UnionQuery<TSqlQuery> : ISqlFormattable where TSqlQuery : SelectSqlQueryBase<TSqlQuery>, new()
+    public class UnionQuery<TSelectQuery> : ISqlFormattable where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
     {
-        public UnionQuery(TSqlQuery query, bool all)
+        public UnionQuery(TSelectQuery query, bool all)
         {
             Query = query;
             All = all;
         }
 
-        public TSqlQuery Query { get; }
+        public TSelectQuery Query { get; }
 
         public bool All { get; }
 

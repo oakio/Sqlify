@@ -5,13 +5,13 @@ using SqlDsl.Core.Predicates;
 
 namespace SqlDsl
 {
-    public class UpdateSqlQuery : ISqlQuery
+    public class UpdateQuery : IQuery
     {
         private readonly Table _table;
         private readonly List<AssignExpression> _setExpressions;
         private PredicateExpression _whereClause;
 
-        public UpdateSqlQuery(Table table)
+        public UpdateQuery(Table table)
         {
             _table = table;
             _setExpressions = new List<AssignExpression>();
@@ -25,18 +25,18 @@ namespace SqlDsl
             sql.Append(" WHERE ", _whereClause);
         }
 
-        public UpdateSqlQuery Set<T>(ColumnExpression<T> column, T value) => SetInternal(column, new ParamExpression<T>(value));
+        public UpdateQuery Set<T>(ColumnExpression<T> column, T value) => SetInternal(column, new ParamExpression<T>(value));
 
-        public UpdateSqlQuery Set<T>(ColumnExpression<T> column, Expression<T> value) => SetInternal(column, value);
+        public UpdateQuery Set<T>(ColumnExpression<T> column, Expression<T> value) => SetInternal(column, value);
 
-        private UpdateSqlQuery SetInternal<T>(Expression<T> left, Expression<T> right)
+        private UpdateQuery SetInternal<T>(Expression<T> left, Expression<T> right)
         {
             var expression = new AssignExpression(left, right);
             _setExpressions.Add(expression);
             return this;
         }
 
-        public UpdateSqlQuery Where(PredicateExpression condition)
+        public UpdateQuery Where(PredicateExpression condition)
         {
             _whereClause = _whereClause == null
                 ? condition
@@ -44,15 +44,15 @@ namespace SqlDsl
             return this;
         }
 
-        public UpdateSqlQuery WhereExists<TSqlSubQuery>(TSqlSubQuery query) where TSqlSubQuery : SelectSqlQueryBase<TSqlSubQuery>, new()
+        public UpdateQuery WhereExists<TSubQuery>(TSubQuery query) where TSubQuery : SelectQueryBase<TSubQuery>, new()
         {
-            var condition = new ExistsExpression<TSqlSubQuery>(query);
+            var condition = new ExistsExpression<TSubQuery>(query);
             return Where(condition);
         }
 
-        public UpdateSqlQuery WhereNotExists<TSqlSubQuery>(TSqlSubQuery query) where TSqlSubQuery : SelectSqlQueryBase<TSqlSubQuery>, new()
+        public UpdateQuery WhereNotExists<TSubQuery>(TSubQuery query) where TSubQuery : SelectQueryBase<TSubQuery>, new()
         {
-            var condition = new NotExistsExpression<TSqlSubQuery>(query);
+            var condition = new NotExistsExpression<TSubQuery>(query);
             return Where(condition);
         }
     }

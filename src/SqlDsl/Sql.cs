@@ -5,19 +5,19 @@ namespace SqlDsl
 {
     public static class Sql
     {
-        public static SelectSqlQuery Select() => new SelectSqlQuery();
+        public static SelectQuery Select() => new SelectQuery();
 
-        public static SelectSqlQuery Select(params Expression[] columns) => new SelectSqlQuery().Select(columns);
+        public static SelectQuery Select(params Expression[] columns) => new SelectQuery().Select(columns);
 
-        public static SelectSqlQuery<T> Select<T>(Expression<T> column) => new SelectSqlQuery<T>().Select(column);
+        public static SelectQuery<T> Select<T>(Expression<T> column) => new SelectQuery<T>().Select(column);
 
-        public static InsertSqlQuery Insert(Table table) => new InsertSqlQuery(table);
+        public static InsertQuery Insert(Table table) => new InsertQuery(table);
 
-        public static UpdateSqlQuery Update(Table table) => new UpdateSqlQuery(table);
+        public static UpdateQuery Update(Table table) => new UpdateQuery(table);
 
-        public static DeleteSqlQuery Delete(Table table) => new DeleteSqlQuery(table);
+        public static DeleteQuery Delete(Table table) => new DeleteQuery(table);
 
-        public static MultipleSqlQuery Multiple(params ISelectSqlQuery[] queries) => new MultipleSqlQuery(queries);
+        public static MultipleQuery Multiple(params ISelectQuery[] queries) => new MultipleQuery(queries);
 
         public static FunctionExpression<int> Count() => new FunctionExpression<int>("COUNT", ColumnExpression<int>.Asterisk);
 
