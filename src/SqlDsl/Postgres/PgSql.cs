@@ -9,5 +9,7 @@ namespace SqlDsl.Postgres
         public static PgSelectQuery Select(params Expression[] columns) => new PgSelectQuery().Select(columns);
 
         public static PgSelectQuery<T> Select<T>(Expression<T> column) => new PgSelectQuery<T>().Select(column);
+
+        public static PgInsertQuery Insert(Table table) => new PgInsertQuery(table);
     }
 }

@@ -43,6 +43,7 @@ Fluent SQL builder library.
 
 * `PostreSQL` dialect
     * [`OFFSET` and `LIMIT`](#postgresql-offset-and-limit-clauses) clauses
+    * [`UPDATE RETURNING`](#postgresql-update-returning-clause) clause
 
 As an example, consider the following database schema (`authors` and `books` tables with one-to-many relationship):
 ```sql
@@ -334,6 +335,16 @@ PgSelectQuery query = PgSql
 // SELECT * FROM authors ORDER BY name OFFSET @p1 LIMIT @p2
 ```
 [up &#8593;](#examples)
+## PostgreSQL UPDATE RETURNING clause
+```csharp
+var b = new BooksTable();
+PgUpdateQuery query = PgSql
+    .Update(b)
+    .Set(b.Rating, b.Rating + 1)
+    .Returning(b.Id, b.Rating);
+
+// UPDATE books SET rating = rating + @p1 RETURNING id, rating
+```
 
 # How to build
 ```bash
