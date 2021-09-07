@@ -26,7 +26,7 @@ namespace SqlDsl.Tests
                 .Update(u)
                 .Set(u.Age, u.Age + 1);
 
-            query.ShouldBe("UPDATE users SET age = age + @p1");
+            query.ShouldBe("UPDATE users SET age = users.age + @p1");
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace SqlDsl.Tests
                 .Update(u)
                 .Set(u.Age, u.Age);
 
-            query.ShouldBe("UPDATE users SET age = age");
+            query.ShouldBe("UPDATE users SET age = users.age");
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace SqlDsl.Tests
                 .Update(u)
                 .Set(u.Age, u.Age + u.Age);
 
-            query.ShouldBe("UPDATE users SET age = age + age");
+            query.ShouldBe("UPDATE users SET age = users.age + users.age");
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace SqlDsl.Tests
                 .Set(u.Age, 10)
                 .Where(u.Age == 10);
 
-            query.ShouldBe("UPDATE users SET age = @p1 WHERE age = @p2");
+            query.ShouldBe("UPDATE users SET age = @p1 WHERE users.age = @p2");
         }
     }
 }

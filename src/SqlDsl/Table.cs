@@ -18,10 +18,6 @@ namespace SqlDsl
 
         public string GetAlias() => _alias;
 
-        protected ColumnExpression<T> CreateColumn<T>(string name) => new ColumnExpression<T>(GetColumnName(name));
-
-        protected string GetColumnName(string name) => string.IsNullOrEmpty(_alias) 
-            ? name 
-            : string.Concat(_alias, ".", name);
+        protected ColumnExpression<T> CreateColumn<T>(string name) => new ColumnExpression<T>(name, _alias ?? _name);
     }
 }

@@ -38,7 +38,7 @@ namespace SqlDsl.Tests
                 .Select(u.Name)
                 .From(u);
 
-            query.ShouldBe("SELECT name FROM users");
+            query.ShouldBe("SELECT users.name FROM users");
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace SqlDsl.Tests
                 .Distinct()
                 .From(u);
 
-            query.ShouldBe("SELECT DISTINCT name FROM users");
+            query.ShouldBe("SELECT DISTINCT users.name FROM users");
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace SqlDsl.Tests
                 .Select(Sql.Max(u.Age))
                 .From(u);
 
-            query.ShouldBe("SELECT MAX(age) FROM users");
+            query.ShouldBe("SELECT MAX(users.age) FROM users");
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace SqlDsl.Tests
                 .Select(Sql.Min(u.Age))
                 .From(u);
 
-            query.ShouldBe("SELECT MIN(age) FROM users");
+            query.ShouldBe("SELECT MIN(users.age) FROM users");
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace SqlDsl.Tests
                 .Select(Sql.Avg(u.Age))
                 .From(u);
 
-            query.ShouldBe("SELECT AVG(age) FROM users");
+            query.ShouldBe("SELECT AVG(users.age) FROM users");
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace SqlDsl.Tests
                 .Select(Sql.Sum(u.Age))
                 .From(u);
 
-            query.ShouldBe("SELECT SUM(age) FROM users");
+            query.ShouldBe("SELECT SUM(users.age) FROM users");
         }
 
         [Test]
@@ -186,7 +186,7 @@ namespace SqlDsl.Tests
                 .OrderBy(u.Name)
                 .OrderByDesc(u.Age);
 
-            query.ShouldBe("SELECT * FROM users ORDER BY name, age DESC");
+            query.ShouldBe("SELECT * FROM users ORDER BY users.name, users.age DESC");
         }
 
         [Test]
@@ -213,7 +213,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .GroupBy(u.Name);
 
-            query.ShouldBe("SELECT * FROM users GROUP BY name");
+            query.ShouldBe("SELECT * FROM users GROUP BY users.name");
         }
 
         [Test]
@@ -240,7 +240,7 @@ namespace SqlDsl.Tests
                 .GroupBy(u.Name)
                 .OrderByDesc(Sql.Count());
 
-            query.ShouldBe("SELECT name, COUNT(*) FROM users GROUP BY name ORDER BY COUNT(*) DESC");
+            query.ShouldBe("SELECT users.name, COUNT(*) FROM users GROUP BY users.name ORDER BY COUNT(*) DESC");
         }
 
         [Test]
@@ -253,7 +253,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where((u.Age > 30).And(u.Name == "John"));
 
-            query.ShouldBe("SELECT * FROM users WHERE age > @p1 AND name = @p2");
+            query.ShouldBe("SELECT * FROM users WHERE users.age > @p1 AND users.name = @p2");
         }
 
         [Test]
@@ -279,7 +279,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where(u.Name.In(new[] {"John", "Adam"}));
 
-            query.ShouldBe("SELECT * FROM users WHERE name IN @p1");
+            query.ShouldBe("SELECT * FROM users WHERE users.name IN @p1");
         }
 
         [Test]
@@ -292,7 +292,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where(u.Name.NotIn(new[] { "John", "Adam" }));
 
-            query.ShouldBe("SELECT * FROM users WHERE name NOT IN @p1");
+            query.ShouldBe("SELECT * FROM users WHERE users.name NOT IN @p1");
         }
 
         [Test]
@@ -305,7 +305,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where(u.Age.Between(30, 50));
 
-            query.ShouldBe("SELECT * FROM users WHERE age BETWEEN @p1 AND @p2");
+            query.ShouldBe("SELECT * FROM users WHERE users.age BETWEEN @p1 AND @p2");
         }
 
         [Test]
@@ -318,7 +318,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where(u.Name.Like("A%"));
 
-            query.ShouldBe("SELECT * FROM users WHERE name LIKE @p1");
+            query.ShouldBe("SELECT * FROM users WHERE users.name LIKE @p1");
         }
 
         [Test]
@@ -459,7 +459,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where(u.Name.IsNull);
 
-            query.ShouldBe("SELECT * FROM users WHERE name IS NULL");
+            query.ShouldBe("SELECT * FROM users WHERE users.name IS NULL");
         }
 
         [Test]
@@ -472,7 +472,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where(u.Name.IsNotNull);
 
-            query.ShouldBe("SELECT * FROM users WHERE name IS NOT NULL");
+            query.ShouldBe("SELECT * FROM users WHERE users.name IS NOT NULL");
         }
 
         [Test]
@@ -484,7 +484,7 @@ namespace SqlDsl.Tests
                 .Select(u.Id.As("UserId"))
                 .From(u);
 
-            query.ShouldBe("SELECT id AS UserId FROM users");
+            query.ShouldBe("SELECT users.id AS UserId FROM users");
         }
 
         [Test]
@@ -508,7 +508,7 @@ namespace SqlDsl.Tests
                 .Select(Sql.Max(u.Age).As("max_age"))
                 .From(u);
 
-            query.ShouldBe("SELECT MAX(age) AS max_age FROM users");
+            query.ShouldBe("SELECT MAX(users.age) AS max_age FROM users");
         }
 
         [Test]
@@ -537,7 +537,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where(u.Age > 40);
 
-            query.ShouldBe("SELECT * FROM users WHERE age < @p1 UNION SELECT * FROM users WHERE age > @p2");
+            query.ShouldBe("SELECT * FROM users WHERE users.age < @p1 UNION SELECT * FROM users WHERE users.age > @p2");
         }
 
         [Test]
@@ -554,7 +554,7 @@ namespace SqlDsl.Tests
                 .From(u)
                 .Where(u.Age > 40);
 
-            query.ShouldBe("SELECT id FROM users WHERE age < @p1 UNION ALL SELECT id FROM users WHERE age > @p2");
+            query.ShouldBe("SELECT users.id FROM users WHERE users.age < @p1 UNION ALL SELECT users.id FROM users WHERE users.age > @p2");
         }
 
         [Test]
@@ -568,7 +568,7 @@ namespace SqlDsl.Tests
                 .GroupBy(u.Name)
                 .Having(Sql.Count() > 5);
 
-            query.ShouldBe("SELECT name, COUNT(*) FROM users GROUP BY name HAVING COUNT(*) > @p1");
+            query.ShouldBe("SELECT users.name, COUNT(*) FROM users GROUP BY users.name HAVING COUNT(*) > @p1");
         }
 
         [Test]
@@ -594,7 +594,7 @@ namespace SqlDsl.Tests
                 .Select(u.Age + 10)
                 .From(u);
 
-            query.ShouldBe("SELECT age + @p1 FROM users");
+            query.ShouldBe("SELECT users.age + @p1 FROM users");
         }
 
         [Test]
@@ -618,7 +618,7 @@ namespace SqlDsl.Tests
                 .Select(Sql.Sum(u.Age + 1))
                 .From(u);
 
-            query.ShouldBe("SELECT SUM(age + @p1) FROM users");
+            query.ShouldBe("SELECT SUM(users.age + @p1) FROM users");
         }
 
         [Test]
@@ -642,7 +642,7 @@ namespace SqlDsl.Tests
                 .Select(Sql.Sum(u.Age) + 1)
                 .From(u);
 
-            query.ShouldBe("SELECT SUM(age) + @p1 FROM users");
+            query.ShouldBe("SELECT SUM(users.age) + @p1 FROM users");
         }
 
         [Test]

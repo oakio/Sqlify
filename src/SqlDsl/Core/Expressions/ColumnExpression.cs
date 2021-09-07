@@ -5,11 +5,17 @@ namespace SqlDsl.Core.Expressions
 {
     public sealed class ColumnExpression<T> : Expression<T>
     {
-        private readonly string _name;
+        public readonly string UnqualifiedName;
 
-        public ColumnExpression(string name)
+        public readonly string Name;
+
+        public ColumnExpression(string unqualifiedName, string tableAlias = null)
         {
-            _name = name;
+            UnqualifiedName = unqualifiedName;
+
+            Name = string.IsNullOrEmpty(tableAlias)
+                ? unqualifiedName
+                : string.Concat(tableAlias, ".", unqualifiedName);
         }
 
         public PredicateExpression In(IReadOnlyCollection<T> items) => new InExpression<T>(this, items);
@@ -28,6 +34,6 @@ namespace SqlDsl.Core.Expressions
 
         public static ColumnExpression<T> Asterisk = new ColumnExpression<T>("*");
 
-        public override void Format(ISqlWriter sql) => sql.Append(_name);
+        public override void Format(ISqlWriter sql) => sql.Append(Name);
     }
 }

@@ -28,9 +28,9 @@ namespace SqlDsl.Core
 
         public TUpdateQuery Set<T>(ColumnExpression<T> column, Expression<T> value) => SetInternal(column, value);
 
-        private TUpdateQuery SetInternal<T>(Expression<T> left, Expression<T> right)
+        private TUpdateQuery SetInternal<T>(ColumnExpression<T> left, Expression<T> right)
         {
-            var expression = new AssignExpression(left, right);
+            var expression = new AssignExpression(left.UnqualifiedName, right);
             _setExpressions.Add(expression);
             return Self();
         }

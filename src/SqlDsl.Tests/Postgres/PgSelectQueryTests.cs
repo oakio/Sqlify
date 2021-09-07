@@ -17,7 +17,7 @@ namespace SqlDsl.Tests.Postgres
                 .OrderBy(u.Name)
                 .Limit(10);
 
-            query.ShouldBe("SELECT * FROM users ORDER BY name LIMIT @p1");
+            query.ShouldBe("SELECT * FROM users ORDER BY users.name LIMIT @p1");
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace SqlDsl.Tests.Postgres
                 .OrderBy(u.Name)
                 .Offset(10);
 
-            query.ShouldBe("SELECT * FROM users ORDER BY name OFFSET @p1");
+            query.ShouldBe("SELECT * FROM users ORDER BY users.name OFFSET @p1");
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace SqlDsl.Tests.Postgres
                 .Offset(5)
                 .Limit(10);
 
-            query.ShouldBe("SELECT * FROM users ORDER BY name OFFSET @p1 LIMIT @p2");
+            query.ShouldBe("SELECT * FROM users ORDER BY users.name OFFSET @p1 LIMIT @p2");
         }
     }
 }

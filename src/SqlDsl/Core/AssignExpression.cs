@@ -4,20 +4,20 @@ namespace SqlDsl.Core
 {
     public readonly struct AssignExpression : ISqlFormattable
     {
-        private readonly Expression _left;
-        private readonly Expression _right;
+        private readonly string _column;
+        private readonly Expression _value;
 
-        public AssignExpression(Expression left, Expression right)
+        public AssignExpression(string column, Expression value)
         {
-            _left = left;
-            _right = right;
+            _column = column;
+            _value = value;
         }
 
         public void Format(ISqlWriter sql)
         {
-            _left.Format(sql);
+            sql.Append(_column);
             sql.Append(" = ");
-            _right.Format(sql);
+            _value.Format(sql);
         }
     }
 }

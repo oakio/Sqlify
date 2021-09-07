@@ -13,7 +13,7 @@ namespace SqlDsl.Core
             _value = value;
         }
 
-        public void WriteColumn(ISqlWriter sql) => _column.Format(sql);
+        public void WriteColumn(ISqlWriter sql) => sql.Append(_column.UnqualifiedName);
 
         public void WriteValue(ISqlWriter sql)
         {

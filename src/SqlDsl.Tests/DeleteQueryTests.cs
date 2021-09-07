@@ -36,7 +36,7 @@ namespace SqlDsl.Tests
                 .Delete(u)
                 .Where(u.Id == 0);
 
-            query.ShouldBe("DELETE FROM users WHERE id = @p1");
+            query.ShouldBe("DELETE FROM users WHERE users.id = @p1");
         }
 
         [Test]

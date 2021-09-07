@@ -106,7 +106,7 @@ var query = Sql
     .Select(b.Id, b.Name)
     .From(b);
 
-// SELECT id, name FROM books
+// SELECT books.id, books.name FROM books
 ```
 ```csharp
 var b = new BooksTable("t"); // table alias
@@ -135,56 +135,56 @@ var query = Sql
 // SELECT COUNT(*) FROM books
 ```
 ```csharp
-var b = new BooksTable();
+var b = new BooksTable("b");
 var query = Sql
     .Select(Sql.Avg(b.Rating))
     .From(b);
 
-// SELECT AVG(rating) FROM books
+// SELECT AVG(b.rating) FROM books b
 ```
 [up &#8593;](#examples)
 ## DISTINCT
 ```csharp
-var a = new AuthorsTable();
+var a = new AuthorsTable("a");
 var query = Sql
     .Select(a.Name)
     .Distinct()
     .From(a);
 
-// SELECT DISTINCT name FROM authors
+// SELECT DISTINCT a.name FROM authors a
 ```
 [up &#8593;](#examples)
 ## Predicates
 ```csharp
-var b = new BooksTable();
+var b = new BooksTable("b");
 var query = Sql
     .Select()
     .From(b)
     .Where(b.Name.IsNull.And(b.Rating <= 0));
 
-// SELECT * FROM books WHERE name IS NULL AND rating <= @p1
+// SELECT * FROM books b WHERE b.name IS NULL AND b.rating <= @p1
 ```
 [up &#8593;](#examples)
 ## LIKE predicate
 ```csharp
-var a = new AuthorsTable();
+var a = new AuthorsTable("a");
 var query = Sql
     .Select()
     .From(a)
     .Where(a.Name.Like("A%")); // started with 'A'
 
-// SELECT * FROM authors WHERE name LIKE @p1
+// SELECT * FROM authors a WHERE a.name LIKE @p1
 ```
 [up &#8593;](#examples)
 ## IN predicate
 ```csharp
-var a = new AuthorsTable();
+var a = new AuthorsTable("a");
 var query = Sql
     .Select()
     .From(a)
     .Where(a.Id.In(new[] {1, 2})); // where id==1 OR id==2
 
-// SELECT * FROM authors WHERE id IN @p1
+// SELECT * FROM authors a WHERE a.id IN @p1
 ```
 ```csharp
 var a = new AuthorsTable("a");
@@ -223,13 +223,13 @@ var query = Sql
 [up &#8593;](#examples)
 ## BETWEEN predicate
 ```csharp
-var b = new BooksTable();
+var b = new BooksTable("b");
 var query = Sql
     .Select()
     .From(b)
     .Where(b.Rating.Between(2, 4));
 
-// SELECT * FROM books WHERE rating BETWEEN @p1 AND @p2
+// SELECT * FROM books b WHERE b.rating BETWEEN @p1 AND @p2
 ```
 [up &#8593;](#examples)
 ## JOIN ON clause
@@ -246,24 +246,24 @@ var query = Sql
 [up &#8593;](#examples)
 ## ORDER BY clause
 ```csharp
-var b = new BooksTable();
+var b = new BooksTable("b");
 var query = Sql
     .Select()
     .OrderByDesc(b.Rating)
     .From(b);
 
-// SELECT * FROM books ORDER BY rating DESC
+// SELECT * FROM books b ORDER BY b.rating DESC
 ```
 [up &#8593;](#examples)
 ## GROUP BY clause
 ```csharp
-var b = new BooksTable();
+var b = new BooksTable("b");
 var query = Sql
     .Select(b.AuthorId, Sql.Count())
     .GroupBy(b.AuthorId)
     .From(b);
 
-// SELECT author_id, COUNT(*) FROM books GROUP BY author_id
+// SELECT b.author_id, COUNT(*) FROM books b GROUP BY b.author_id
 ```
 [up &#8593;](#examples)
 ## Multiple queries
@@ -281,14 +281,14 @@ MultipleQuery query = Sql
 [up &#8593;](#examples)
 ## HAVING clause
 ```csharp
-var b = new BooksTable();
+var b = new BooksTable("b");
 var query = Sql
     .Select(b.AuthorId, Sql.Count())
     .GroupBy(b.AuthorId)
     .Having(Sql.Count() > 3)
     .From(b);
 
-// SELECT author_id, COUNT(*) FROM books GROUP BY author_id HAVING COUNT(*) > @p1
+// SELECT b.author_id, COUNT(*) FROM books b GROUP BY b.author_id HAVING COUNT(*) > @p1
 ```
 [up &#8593;](#examples)
 ## DELETE query
@@ -298,7 +298,7 @@ var query = Sql
     .Delete(b)
     .Where(b.Id == 1);
 
-// DELETE FROM books WHERE id = @p1
+// DELETE FROM books WHERE books.id = @p1
 ```
 [up &#8593;](#examples)
 ## INSERT query
@@ -320,12 +320,12 @@ var query = Sql
     .Set(b.Rating, b.Rating + 1)
     .Where(b.AuthorId == 1);
 
-// UPDATE books SET rating = rating + @p1 WHERE author_id = @p2
+// UPDATE books SET rating = books.rating + @p1 WHERE books.author_id = @p2
 ```
 [up &#8593;](#examples)
 ## PostgreSQL OFFSET and LIMIT clauses
 ```csharp
-var a = new AuthorsTable()
+var a = new AuthorsTable("a");
 PgSelectQuery query = PgSql
     .Select()
     .From(a)
@@ -333,7 +333,7 @@ PgSelectQuery query = PgSql
     .Offset(5)
     .Limit(10)
 
-// SELECT * FROM authors ORDER BY name OFFSET @p1 LIMIT @p2
+// SELECT * FROM authors a ORDER BY a.name OFFSET @p1 LIMIT @p2
 ```
 [up &#8593;](#examples)
 ## PostgreSQL UPDATE RETURNING clause
@@ -344,7 +344,7 @@ PgUpdateQuery query = PgSql
     .Set(b.Rating, b.Rating + 1)
     .Returning(b.Id, b.Rating);
 
-// UPDATE books SET rating = rating + @p1 RETURNING id, rating
+// UPDATE books SET rating = books.rating + @p1 RETURNING books.id, books.rating
 ```
 [up &#8593;](#examples)
 ## PostgreSQL INSERT RETURNING clause
