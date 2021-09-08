@@ -6,20 +6,19 @@ namespace SqlDsl.Core
 {
     public abstract class UpdateQueryBase<TUpdateQuery> : IQuery where TUpdateQuery : UpdateQueryBase<TUpdateQuery>
     {
-        private readonly Table _table;
+        private readonly TableAliasExpression _table;
         private readonly List<AssignExpression> _setExpressions;
         private PredicateExpression _whereClause;
 
         protected UpdateQueryBase(Table table)
         {
-            _table = table;
+            _table = new TableAliasExpression(table, false);
             _setExpressions = new List<AssignExpression>();
         }
 
         public virtual void Format(ISqlWriter sql)
         {
-            sql.Append("UPDATE ");
-            sql.Append(_table.GetName());
+            sql.Append("UPDATE ", _table);
             sql.Append(" SET ", ", ", _setExpressions);
             sql.Append(" WHERE ", _whereClause);
         }

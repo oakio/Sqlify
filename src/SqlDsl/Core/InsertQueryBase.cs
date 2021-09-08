@@ -5,12 +5,12 @@ namespace SqlDsl.Core
 {
     public abstract class InsertQueryBase<TInsertQuery> : IQuery where TInsertQuery : InsertQueryBase<TInsertQuery>
     {
-        private readonly Table _table;
+        private readonly TableAliasExpression _table;
         private readonly List<IInsertValue> _values;
 
         protected InsertQueryBase(Table table)
         {
-            _table = table;
+            _table = new TableAliasExpression(table, true);
             _values = new List<IInsertValue>();
         }
 
@@ -23,8 +23,7 @@ namespace SqlDsl.Core
 
         public virtual void Format(ISqlWriter sql)
         {
-            sql.Append("INSERT INTO ");
-            sql.Append(_table.GetName());
+            sql.Append("INSERT INTO ", _table);
             sql.Append(" (");
             for (int i = 0; i < _values.Count; i++)
             {

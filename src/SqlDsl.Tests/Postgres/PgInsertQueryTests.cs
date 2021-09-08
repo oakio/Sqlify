@@ -58,7 +58,7 @@ namespace SqlDsl.Tests.Postgres
                 .Values(u.Age, 10)
                 .Returning(u.Id, u.Name);
 
-            query.ShouldBe("INSERT INTO users u (name, age) VALUES (@p1, @p2) RETURNING u.id, u.name");
+            query.ShouldBe("INSERT INTO users AS u (name, age) VALUES (@p1, @p2) RETURNING u.id, u.name");
         }
     }
 }
