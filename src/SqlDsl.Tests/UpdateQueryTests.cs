@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace SqlDsl.Tests
@@ -64,6 +65,14 @@ namespace SqlDsl.Tests
                 .Where(u.Age == 10);
 
             query.ShouldBe("UPDATE users SET age = @p1 WHERE users.age = @p2");
+        }
+
+        [Test]
+        public void Update_table_alias_is_not_supported()
+        {
+            var u = new UsersTable("u");
+
+            Assert.Throws<NotSupportedException>(() => Sql.Update(u));
         }
     }
 }

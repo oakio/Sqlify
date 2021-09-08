@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace SqlDsl.Tests
@@ -16,6 +17,14 @@ namespace SqlDsl.Tests
                 .Values(u.Age, 10);
 
             query.ShouldBe("INSERT INTO users (name, age) VALUES (@p1, @p2)");
+        }
+
+        [Test]
+        public void Insert_into_table_alias_is_not_supported()
+        {
+            var u = new UsersTable("u");
+
+            Assert.Throws<NotSupportedException>(() => Sql.Insert(u));
         }
     }
 }
