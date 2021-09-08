@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using SqlDsl.Core.Clauses;
+using SqlDsl.Core.Expressions;
 using SqlDsl.Core.Predicates;
 
 namespace SqlDsl.Core
 {
     public abstract class DeleteQueryBase<TDeleteQuery> : IQuery where TDeleteQuery : DeleteQueryBase<TDeleteQuery>
     {
-        private readonly Table _table;
+        private readonly TableAliasExpression _table;
         private List<JoinClause> _joinClauses;
         private PredicateExpression _whereClause;
 
         protected DeleteQueryBase(Table table)
         {
-            _table = table;
+            _table = new TableAliasExpression(table, false);
         }
 
         public TDeleteQuery Where(PredicateExpression condition)
@@ -42,26 +43,9 @@ namespace SqlDsl.Core
             return Self();
         }
 
-        public void Format(ISqlWriter sql)
+        public virtual void Format(ISqlWriter sql)
         {
-            string alias = _table.GetAlias();
-            string name = _table.GetName();
-
-            if (string.IsNullOrEmpty(alias))
-            {
-                sql.Append("DELETE FROM ");
-                sql.Append(name);
-            }
-            else
-            {
-                sql.Append("DELETE ");
-                sql.Append(alias);
-                sql.Append(" FROM ");
-                sql.Append(name);
-                sql.Append(" ");
-                sql.Append(alias);
-            }
-
+            sql.Append("DELETE FROM ", _table);
             sql.Append(_joinClauses);
             sql.Append(" WHERE ", _whereClause);
         }

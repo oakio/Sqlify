@@ -13,5 +13,7 @@ namespace SqlDsl.Postgres
         public static PgInsertQuery Insert(Table table) => new PgInsertQuery(table);
 
         public static PgUpdateQuery Update(Table table) => new PgUpdateQuery(table);
+
+        public static PgDeleteQuery Delete(Table table) => new PgDeleteQuery(table);
     }
 }

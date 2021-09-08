@@ -45,6 +45,7 @@ Fluent SQL builder library.
     * [`OFFSET` and `LIMIT`](#postgresql-offset-and-limit-clauses) clauses
     * [`UPDATE RETURNING`](#postgresql-update-returning-clause) clause
     * [`INSERT RETURNING`](#postgresql-insert-returning-clause) clause
+    * [`DELETE RETURNING`](#postgresql-delete-returning-clause) clause
 
 As an example, consider the following database schema (`authors` and `books` tables with one-to-many relationship):
 ```sql
@@ -356,6 +357,16 @@ PgInsertQuery query = PgSql
     .Returning();
 
 // INSERT INTO books (name) VALUES (@p1) RETURNING *
+```
+[up &#8593;](#examples)
+## PostgreSQL DELETE RETURNING clause
+```csharp
+var b = new BooksTable();
+PgInsertQuery query = PgSql
+    .Delete(b)
+    .Returning();
+
+// DELETE FROM books RETURNING *
 ```
 [up &#8593;](#examples)
 
