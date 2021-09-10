@@ -51,5 +51,29 @@ namespace SqlDsl.Core
                 item.Format(sql);
             }
         }
+
+        public static void Append<T>(this ISqlWriter sql, string prefix, string separator, IReadOnlyList<T> items, string suffix)
+            where T : ISqlFormattable
+        {
+            if (items == null || items.Count == 0)
+            {
+                return;
+            }
+
+            sql.Append(prefix);
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (i > 0)
+                {
+                    sql.Append(separator);
+                }
+
+                T item = items[i];
+                item.Format(sql);
+            }
+
+            sql.Append(suffix);
+        }
     }
 }

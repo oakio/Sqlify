@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SqlDsl.Postgres;
+using SqlDsl.Postgres.Clauses;
 
 namespace SqlDsl.Tests.Postgres
 {
@@ -59,6 +60,79 @@ namespace SqlDsl.Tests.Postgres
                 .Returning(u.Id, u.Name);
 
             query.ShouldBe("INSERT INTO users AS u (name, age) VALUES (@p1, @p2) RETURNING u.id, u.name");
+        }
+
+        [Test]
+        public void Insert_into_table_on_conflict_columns_do_nothing()
+        {
+            var b = new BooksTable();
+
+            PgInsertQuery query = PgSql
+                .Insert(b)
+                .Values(b.Id, 1)
+                .Values(b.Name, "foo")
+                .OnConflict(
+                    PgConflict.Columns(b.Name),
+                    PgConflict.DoNothing
+                );
+
+            query.ShouldBe("INSERT INTO books (id, name) VALUES (@p1, @p2) ON CONFLICT (books.name) DO NOTHING");
+        }
+
+        [Test]
+        public void Insert_into_table_alias_on_conflict_columns_do_nothing()
+        {
+            var b = new BooksTable("b");
+
+            PgInsertQuery query = PgSql
+                .Insert(b)
+                .Values(b.Id, 1)
+                .Values(b.Name, "foo")
+                .OnConflict(
+                    PgConflict.Columns(b.Name),
+                    PgConflict.DoNothing);
+
+            query.ShouldBe("INSERT INTO books AS b (id, name) VALUES (@p1, @p2) ON CONFLICT (b.name) DO NOTHING");
+        }
+
+        [Test]
+        public void Insert_into_table_on_conflict_columns_do_update()
+        {
+            var b = new BooksTable();
+
+            PgInsertQuery query = PgSql
+                .Insert(b)
+                .Values(b.Id, 1)
+                .Values(b.Name, "foo")
+                .Values(b.Quantity, 5)
+                .OnConflict(
+                    PgConflict.Columns(b.Name),
+                    PgConflict
+                        .DoUpdate()
+                        .Set(b.Quantity, b.Quantity + 5)
+                );
+
+            query.ShouldBe("INSERT INTO books (id, name, qty) VALUES (@p1, @p2, @p3) ON CONFLICT (books.name) DO UPDATE SET qty = books.qty + @p4");
+        }
+
+        [Test]
+        public void Insert_into_table_alias_on_conflict_columns_do_update()
+        {
+            var b = new BooksTable("b");
+
+            PgInsertQuery query = PgSql
+                .Insert(b)
+                .Values(b.Id, 1)
+                .Values(b.Name, "foo")
+                .Values(b.Quantity, 5)
+                .OnConflict(
+                    PgConflict.Columns(b.Name),
+                    PgConflict
+                        .DoUpdate()
+                        .Set(b.Quantity, b.Quantity + 5)
+                );
+
+            query.ShouldBe("INSERT INTO books AS b (id, name, qty) VALUES (@p1, @p2, @p3) ON CONFLICT (b.name) DO UPDATE SET qty = b.qty + @p4");
         }
     }
 }

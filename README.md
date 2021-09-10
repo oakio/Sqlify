@@ -1,11 +1,12 @@
 # Welcome to SqlDsl
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8viaaqblmh5t1gwv?svg=true)](https://ci.appveyor.com/project/oakio/sqldsl)
-
 [![Nuget Package](https://badgen.net/nuget/v/sqldsl)](https://www.nuget.org/packages/SqlDsl)
 
 # Intro
-Fluent SQL builder library.
+Fluent SQL builder library. 
+
+Just start build `SQL` query from `Sql` or `PgSql` classes.
 
 ## Features:
 * `SELECT`, `DELETE`, `INSERT`, `UPDATE` queries
@@ -46,6 +47,7 @@ Fluent SQL builder library.
     * [`UPDATE RETURNING`](#postgresql-update-returning-clause) clause
     * [`INSERT RETURNING`](#postgresql-insert-returning-clause) clause
     * [`DELETE RETURNING`](#postgresql-delete-returning-clause) clause
+    * [`INSERT ON CONFLICT DO`](#postgresql-insert-on-conflict-do-clause) clause
 
 As an example, consider the following database schema (`authors` and `books` tables with one-to-many relationship):
 ```sql
@@ -58,7 +60,8 @@ CREATE TABLE books (
     id integer PRIMARY KEY,
     name varchar(512),
     author_id integer REFERENCES authors (id), -- one-to-many relationship
-    rating real
+    rating real,
+    qty integer
 )
 ```
 
@@ -81,12 +84,14 @@ public class BooksTable : Table
     public ColumnExpression<string> Name { get; }
     public ColumnExpression<int> AuthorId { get; }
     public ColumnExpression<double> Rating { get; }
+    public ColumnExpression<int> Quantity { get; }
     public BooksTable(string alias = null) : base("books", alias)
     {
         Id = CreateColumn<int>("id");
         Name = CreateColumn<string>("name");
         AuthorId = CreateColumn<int>("author_id");
         Rating = CreateColumn<double>("rating");
+        Quantity = CreateColumn<int>("qty");
     }
 }
 ```
@@ -369,7 +374,26 @@ PgInsertQuery query = PgSql
 // DELETE FROM books RETURNING *
 ```
 [up &#8593;](#examples)
+## PostgreSQL INSERT ON CONFLICT DO clause
+```csharp
+ var b = new BooksTable("b");
+PgInsertQuery query = PgSql
+    .Insert(b)
+    .Values(b.Id, 1)
+    .Values(b.Name, "foo bar")
+    .Values(b.Quantity, 5)
+    .OnConflict(
+        PgConflict.Columns(b.Name),
+        PgConflict
+            .DoUpdate()
+            .Set(b.Quantity, b.Quantity + 5)
+    );
 
+// INSERT INTO books AS b (id, name, qty) VALUES (@p1, @p2, @p3) 
+// ON CONFLICT (b.name) 
+// DO UPDATE SET qty = b.qty + @p4"
+```
+[up &#8593;](#examples)
 # How to build
 ```bash
 # build
