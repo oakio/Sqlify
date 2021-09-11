@@ -8,10 +8,10 @@ namespace SqlDsl.Tests
     {
         public static void ShouldBe(this ISqlFormattable self, string expectedSql)
         {
-            var writer = new TestSqlWriter();
+            var writer = new SqlWriter();
             self.Format(writer);
 
-            string sql = writer.ToString();
+            string sql = writer.GetCommand();
 
             Assert.That(sql, Is.EqualTo(expectedSql));
             Console.WriteLine(sql);
