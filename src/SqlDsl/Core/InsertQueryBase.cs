@@ -46,5 +46,7 @@ namespace SqlDsl.Core
         }
 
         protected TInsertQuery Self() => this as TInsertQuery;
+
+        public override string ToString() => QueryFormatUtils.ToString(this);
     }
 }

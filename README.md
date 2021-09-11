@@ -102,7 +102,7 @@ var query = Sql
     .Select()
     .From(b);
 
-// SELECT * FROM books
+string sql = query.ToString(); // SELECT * FROM books
 ```
 [up &#8593;](#examples)
 ## Aliases

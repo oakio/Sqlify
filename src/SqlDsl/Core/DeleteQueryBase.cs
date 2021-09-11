@@ -51,5 +51,7 @@ namespace SqlDsl.Core
         }
 
         protected TDeleteQuery Self() => this as TDeleteQuery;
+
+        public override string ToString() => QueryFormatUtils.ToString(this);
     }
 }

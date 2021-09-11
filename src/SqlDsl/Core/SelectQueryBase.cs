@@ -152,5 +152,7 @@ namespace SqlDsl.Core
         }
 
         protected TSelectQuery Self() => this as TSelectQuery;
+
+        public override string ToString() => QueryFormatUtils.ToString(this);
     }
 }

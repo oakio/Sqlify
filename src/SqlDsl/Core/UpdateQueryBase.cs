@@ -55,5 +55,7 @@ namespace SqlDsl.Core
         }
 
         protected TUpdateQuery Self() => this as TUpdateQuery;
+
+        public override string ToString() => QueryFormatUtils.ToString(this);
     }
 }
