@@ -9,6 +9,7 @@
     <PackageTags>sqlbuilder;fluentsql;sql</PackageTags>
     <PackageProjectUrl>https://github.com/oakio/sqldsl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/oakio/sqldsl</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AssemblyName>SqlDsl</AssemblyName>
     <RootNamespace>SqlDsl</RootNamespace>
     <NoWarn>7035;1591</NoWarn>
