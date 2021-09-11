@@ -6,7 +6,8 @@
 # Intro
 Fluent SQL builder library. 
 
-Just start build `SQL` query from `Sql` or `PgSql` classes.
+* Just start build `SQL` query from `Sql` or `PgSql` classes.
+* Use [`SqlDsl.Dapper`](https://www.nuget.org/packages/SqlDsl.Dapper/) library allowing `SqlDsl` and `Dapper` to be used together.
 
 ## Features:
 * `SELECT`, `DELETE`, `INSERT`, `UPDATE` queries
