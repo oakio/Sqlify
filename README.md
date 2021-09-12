@@ -377,7 +377,7 @@ PgInsertQuery query = PgSql
 [up &#8593;](#examples)
 ## PostgreSQL INSERT ON CONFLICT DO clause
 ```csharp
- var b = new BooksTable("b");
+var b = new BooksTable("b");
 PgInsertQuery query = PgSql
     .Insert(b)
     .Values(b.Id, 1)
