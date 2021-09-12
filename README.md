@@ -49,6 +49,7 @@ Fluent SQL builder library.
     * [`INSERT RETURNING`](#postgresql-insert-returning-clause) clause
     * [`DELETE RETURNING`](#postgresql-delete-returning-clause) clause
     * [`INSERT ON CONFLICT DO`](#postgresql-insert-on-conflict-do-clause) clause
+    * [`SELECT FOR`](#postgresql-select-for-clause) clause
 
 As an example, consider the following database schema (`authors` and `books` tables with one-to-many relationship):
 ```sql
@@ -395,6 +396,19 @@ PgInsertQuery query = PgSql
 // DO UPDATE SET qty = b.qty + @p4"
 ```
 [up &#8593;](#examples)
+## PostgreSQL SELECT FOR clause
+```csharp
+var b = new BooksTable("b");
+PgSelectQuery query = PgSql
+    .Select()
+    .From(b)
+    .Where(b.Id == 3)
+    .For(PgLockMode.Update); // mode: UPDATE, NO KEY UPDATE, SHARE, KEY SHARE
+
+// SELECT * FROM books b WHERE b.id = @p1 FOR UPDATE
+```
+[up &#8593;](#examples)
+
 # How to build
 ```bash
 # build

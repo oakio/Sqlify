@@ -7,6 +7,7 @@ namespace SqlDsl.Postgres
     {
         private OffsetClause? _offsetClause;
         private LimitClause? _limitClause;
+        private LockingClause? _lockingClause;
 
         public TSelectQuery Offset(int offset)
         {
@@ -20,12 +21,19 @@ namespace SqlDsl.Postgres
             return Self();
         }
 
+        public TSelectQuery For(PgLockMode mode)
+        {
+            _lockingClause = new LockingClause(mode);
+            return Self();
+        }
+
         public override void Format(ISqlWriter sql)
         {
             base.Format(sql);
             
             _offsetClause?.Format(sql);
             _limitClause?.Format(sql);
+            _lockingClause?.Format(sql);
         }
     }
 }

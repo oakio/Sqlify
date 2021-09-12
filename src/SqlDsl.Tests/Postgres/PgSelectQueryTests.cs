@@ -48,5 +48,19 @@ namespace SqlDsl.Tests.Postgres
 
             query.ShouldBe("SELECT * FROM users ORDER BY users.name OFFSET @p1 LIMIT @p2");
         }
+
+        [Test]
+        public void Select_from_table_with_for_update_mode()
+        {
+            var u = new UsersTable();
+
+            PgSelectQuery query = PgSql
+                .Select()
+                .From(u)
+                .Where(u.Id == 7)
+                .For(PgLockMode.Update);
+
+            query.ShouldBe("SELECT * FROM users WHERE users.id = @p1 FOR UPDATE");
+        }
     }
 }
