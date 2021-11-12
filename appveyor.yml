@@ -7,7 +7,7 @@ build_script:
 
 # tests config
 test_script:
-  - ps: dotnet test .\src
+  - dotnet test .\src
 
 # pack config
 after_test:
