@@ -5,7 +5,7 @@ using SqlDsl.Core.Predicates;
 
 namespace SqlDsl.Core
 {
-    public abstract class DeleteQueryBase<TDeleteQuery> : IQuery where TDeleteQuery : DeleteQueryBase<TDeleteQuery>
+    public abstract class DeleteQueryBase<TDeleteQuery> : IQuery, IHasWhereClause<TDeleteQuery> where TDeleteQuery : DeleteQueryBase<TDeleteQuery>
     {
         private readonly TableAliasExpression _table;
         private List<JoinClause> _joinClauses;

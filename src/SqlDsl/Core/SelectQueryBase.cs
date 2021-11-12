@@ -5,7 +5,7 @@ using SqlDsl.Core.Predicates;
 
 namespace SqlDsl.Core
 {
-    public class SelectQueryBase<TSelectQuery> : ISelectQuery where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
+    public class SelectQueryBase<TSelectQuery> : ISelectQuery, IHasWhereClause<TSelectQuery> where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
     {
         private UnionQuery<TSelectQuery> _unionQuery;
 

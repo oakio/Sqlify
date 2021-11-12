@@ -4,7 +4,7 @@ using SqlDsl.Core.Predicates;
 
 namespace SqlDsl.Core
 {
-    public abstract class UpdateQueryBase<TUpdateQuery> : IQuery where TUpdateQuery : UpdateQueryBase<TUpdateQuery>
+    public abstract class UpdateQueryBase<TUpdateQuery> : IQuery, IHasWhereClause<TUpdateQuery> where TUpdateQuery : UpdateQueryBase<TUpdateQuery>
     {
         private readonly TableAliasExpression _table;
         private readonly List<AssignExpression> _setExpressions;
