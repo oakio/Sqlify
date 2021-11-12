@@ -172,6 +172,18 @@ var query = Sql
 
 // SELECT * FROM books b WHERE b.name IS NULL AND b.rating <= @p1
 ```
+```csharp
+var b = new BooksTable("b");
+var query = Sql
+    .Select()
+    .From(b)
+    .Where(
+        b.Name.IsNull, 
+        b.Rating <= 0
+    );
+
+// SELECT * FROM books b WHERE b.name IS NULL AND b.rating <= @p1
+```
 [up &#8593;](#examples)
 ## LIKE predicate
 ```csharp
