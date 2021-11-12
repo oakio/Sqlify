@@ -7,7 +7,9 @@ namespace SqlDsl.Core.Expressions
         public abstract void Format(ISqlWriter sql);
     }
 
+#pragma warning disable 660,661
     public abstract class Expression<T> : Expression
+#pragma warning restore 660,661
     {
         public AliasExpression<T> As(string alias) => new AliasExpression<T>(this, alias);
 
