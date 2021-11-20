@@ -1,4 +1,5 @@
 using SqlDsl.Core;
+using SqlDsl.Core.CodeGen;
 using SqlDsl.Core.Expressions;
 using SqlDsl.Core.Predicates;
 
@@ -6,6 +7,8 @@ namespace SqlDsl
 {
     public static class Sql
     {
+        public static TTable Table<TTable>(string alias = null) where TTable : ITable =>  TableFactory<TTable>.Create(alias);
+
         public static SelectQuery Select() => new SelectQuery();
 
         public static SelectQuery Select(params Expression[] columns) => new SelectQuery().Select(columns);

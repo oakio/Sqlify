@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Authors>Ilya Dubadenko</Authors>
     <Description>Fluent SQL builder</Description>
     <Copyright>Copyright (c) 2021</Copyright>
@@ -19,6 +19,10 @@
 
   <ItemGroup>
     <PackageReference Include="Codestellation.Cepheid" Version="0.1.6" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
   </ItemGroup>
 
 </Project>
