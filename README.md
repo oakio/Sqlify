@@ -1,11 +1,8 @@
-# Welcome to SqlDsl
-
+# SqlDsl
 [![Build status](https://ci.appveyor.com/api/projects/status/8viaaqblmh5t1gwv?svg=true)](https://ci.appveyor.com/project/oakio/sqldsl)
 [![Nuget Package](https://badgen.net/nuget/v/sqldsl)](https://www.nuget.org/packages/SqlDsl)
 
-# Intro
-Fluent SQL builder library. 
-
+Fluent SQL builder library.
 * Just start build `SQL` query from `Sql` or `PgSql` classes.
 * Use [`SqlDsl.Dapper`](https://www.nuget.org/packages/SqlDsl.Dapper/) library allowing `SqlDsl` and `Dapper` to be used together.
 
