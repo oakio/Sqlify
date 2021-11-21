@@ -4,5 +4,6 @@
     <BaseOutputPath>$(BuildOutputFolder)\bin\$(MSBuildProjectName)</BaseOutputPath>
     <BaseIntermediateOutputPath>$(BuildOutputFolder)\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <PackageOutputPath>$(BuildOutputFolder)\artifacts</PackageOutputPath>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 </Project>
