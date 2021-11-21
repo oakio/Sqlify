@@ -22,10 +22,43 @@ Fluent SQL builder library.
 * Strongly typed (checked at compile time)
 * GC friendly
 
-# Examples 
+# Getting started
+```csharp
+// Create model for table Users with columns: Id, Name
+public interface IUsersTable : ITable
+{
+    ColumnExpression<int> Id { get; }
+    ColumnExpression<string> Name { get; }
+}
+
+var u = Sql.Table<IUsersTable>();
+
+// INSERT INTO Users (Id, Name) VALUES (@p1, @p2)
+var insertQuery = Sql
+    .Insert(u)
+    .Values(u.Id, 1)
+    .Values(u.Name, "Alex");
+
+// SELECT * FRO Users
+var selectQuery = Sql
+    .Select()
+    .From(b);
+
+// UPDATE Users SET Name = @p1 WHERE Users.Id = @p2
+var updateQuery = Sql
+    .Update(u)
+    .Set(u.Name, "John")
+    .Where(u.Id == 1);
+
+// DELETE FROM Users WHERE Users.Id = @p1
+var deleteQuery = Sql
+    .Delete(u)
+    .Where(u.Id == 1);
+```
+
+# Examples
 * [Schema definition](#schema-definition)
 * `SELECT` query
-    * [Hello world](#hello-world)
     * [Aliases](#aliases)
     * [Functions](#functions)
     * [`DISTINCT`](#distinct)
@@ -120,16 +153,6 @@ public interface IAuthorsTable : ITable
 
     ColumnExpression<int> BooksCount { get; }
 }
-```
-
-## Hello world
-```csharp
-var b = Sql.Table<IBooksTable>();
-var query = Sql
-    .Select()
-    .From(b);
-
-string sql = query.ToString(); // SELECT * FROM books
 ```
 [up &#8593;](#examples)
 ## Aliases
