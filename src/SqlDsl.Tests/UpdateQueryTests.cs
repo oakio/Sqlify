@@ -9,7 +9,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Update_table_set_column_value()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             UpdateQuery query = Sql
                 .Update(u)
@@ -21,7 +21,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Update_table_set_column_expression1()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             UpdateQuery query = Sql
                 .Update(u)
@@ -33,7 +33,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Update_table_set_column_expression2()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             UpdateQuery query = Sql
                 .Update(u)
@@ -45,7 +45,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Update_table_set_column_expression3()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             UpdateQuery query = Sql
                 .Update(u)
@@ -57,7 +57,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Update_table_where()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             UpdateQuery query = Sql
                 .Update(u)
@@ -70,7 +70,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Update_table_alias_is_not_supported()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             Assert.Throws<NotSupportedException>(() => Sql.Update(u));
         }

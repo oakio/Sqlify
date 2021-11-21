@@ -9,7 +9,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Update_table_set_column_value()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgUpdateQuery query = PgSql
                 .Update(u)
@@ -21,7 +21,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Update_table_set_column_value_with_returning()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgUpdateQuery query = PgSql
                 .Update(u)
@@ -34,7 +34,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Update_table_set_column_value_where_with_returning_columns()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgUpdateQuery query = PgSql
                 .Update(u)
@@ -48,7 +48,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Update_table_alias_set_column_value_where_with_returning_columns()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             PgUpdateQuery query = PgSql
                 .Update(u)

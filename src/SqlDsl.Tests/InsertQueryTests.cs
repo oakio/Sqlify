@@ -9,7 +9,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Insert_into_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             InsertQuery query = Sql
                 .Insert(u)
@@ -22,7 +22,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Insert_into_table_alias_is_not_supported()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             Assert.Throws<NotSupportedException>(() => Sql.Insert(u));
         }

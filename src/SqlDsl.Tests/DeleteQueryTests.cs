@@ -9,7 +9,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Delete_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             DeleteQuery query = Sql
                 .Delete(u);
@@ -20,7 +20,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Delete_from_table_alias_is_not_supported()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             Assert.Throws<NotSupportedException>(() => Sql.Delete(u));
         }
@@ -28,7 +28,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Delete_from_table_where()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             DeleteQuery query = Sql
                 .Delete(u)
@@ -40,8 +40,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Delete_from_table_join()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable();
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>();
 
             DeleteQuery query = Sql
                 .Delete(b)
@@ -53,8 +53,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Delete_from_table_where_exists()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable();
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>();
 
             DeleteQuery query = Sql
                 .Delete(b)
@@ -66,8 +66,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Delete_from_table_where_not_exists()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable();
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>();
 
             DeleteQuery query = Sql
                 .Delete(b)
@@ -79,8 +79,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Delete_from_table_join_where()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable();
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>();
 
             DeleteQuery query = Sql
                 .Delete(b)

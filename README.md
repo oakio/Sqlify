@@ -23,6 +23,7 @@ Fluent SQL builder library.
 * GC friendly
 
 # Examples 
+* [Schema definition](#schema-definition)
 * `SELECT` query
     * [Hello world](#hello-world)
     * [Aliases](#aliases)
@@ -51,6 +52,7 @@ Fluent SQL builder library.
     * [`INSERT ON CONFLICT DO`](#postgresql-insert-on-conflict-do-clause) clause
     * [`SELECT FOR`](#postgresql-select-for-clause) clause
 
+## Schema definition
 As an example, consider the following database schema (`authors` and `books` tables with one-to-many relationship):
 ```sql
 CREATE TABLE authors (
@@ -67,39 +69,62 @@ CREATE TABLE books (
 )
 ```
 
-For these tables create corresponding classes:
+For these tables create corresponding interfaces:
 ```csharp
-public class AuthorsTable : Table
+[Table("authors")]
+public interface IAuthorsTable : ITable
 {
-    public ColumnExpression<int> Id { get; }
-    public ColumnExpression<string> Name { get; }
-    public AuthorsTable(string alias = null) : base("authors", alias)
-    {
-        Id = CreateColumn<int>("id");
-        Name = CreateColumn<string>("name");
-    }
+    [Column("id")]
+    ColumnExpression<int> Id { get; }
+
+    [Column("name")]
+    ColumnExpression<string> Name { get; }
 }
 
-public class BooksTable : Table
+[Table("books")]
+public interface IBooksTable : ITable
 {
-    public ColumnExpression<int> Id { get; }
-    public ColumnExpression<string> Name { get; }
-    public ColumnExpression<int> AuthorId { get; }
-    public ColumnExpression<double> Rating { get; }
-    public ColumnExpression<int> Quantity { get; }
-    public BooksTable(string alias = null) : base("books", alias)
-    {
-        Id = CreateColumn<int>("id");
-        Name = CreateColumn<string>("name");
-        AuthorId = CreateColumn<int>("author_id");
-        Rating = CreateColumn<double>("rating");
-        Quantity = CreateColumn<int>("qty");
-    }
+    [Column("id")]
+    ColumnExpression<int> Id { get; }
+
+    [Column("name")]
+    ColumnExpression<string> Name { get; }
+
+    [Column("author_id")]
+    ColumnExpression<int> AuthorId { get; }
+
+    [Column("rating")]
+    ColumnExpression<double> Rating { get; }
+
+    [Column("qty")]
+    ColumnExpression<int> Quantity { get; }
 }
 ```
+If the names of the columns in the database are the same as the names of the properties in models, then using `TableAttribute` and `ColumnAttrubute` are optional. 
+
+For example, for schema:
+```sql
+CREATE TABLE Authors (
+    Id integer PRIMARY KEY,
+    Name varchar(64),
+    BooksCount integer
+)
+```
+you can define table like:
+```csharp
+public interface IAuthorsTable : ITable
+{
+    ColumnExpression<int> Id { get; }
+
+    ColumnExpression<int> Name { get; }
+
+    ColumnExpression<int> BooksCount { get; }
+}
+```
+
 ## Hello world
 ```csharp
-var b = new BooksTable();
+var b = Sql.Table<IBooksTable>();
 var query = Sql
     .Select()
     .From(b);
@@ -109,7 +134,7 @@ string sql = query.ToString(); // SELECT * FROM books
 [up &#8593;](#examples)
 ## Aliases
 ```csharp
-var b = new BooksTable();
+var b = Sql.Table<IBooksTable>();
 var query = Sql
     .Select(b.Id, b.Name)
     .From(b);
@@ -117,7 +142,7 @@ var query = Sql
 // SELECT books.id, books.name FROM books
 ```
 ```csharp
-var b = new BooksTable("t"); // table alias
+var b = Sql.Table<IBooksTable>("t"); // table alias
 var query = Sql
     .Select(b.Id, b.Name)
     .From(b);
@@ -125,7 +150,7 @@ var query = Sql
 // SELECT t.id, t.name FROM books t
 ```
 ```csharp
-var b = new BooksTable("t");
+var b = Sql.Table<IBooksTable>("t");
 var query = Sql
     .Select(b.Id, b.Name.As("author_name")) // column alias
     .From(b);
@@ -135,7 +160,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## Functions
 ```csharp
-var b = new BooksTable();
+var b = Sql.Table<IBooksTable>();
 var query = Sql
     .Select(Sql.Count())
     .From(b);
@@ -143,7 +168,7 @@ var query = Sql
 // SELECT COUNT(*) FROM books
 ```
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 var query = Sql
     .Select(Sql.Avg(b.Rating))
     .From(b);
@@ -153,7 +178,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## DISTINCT
 ```csharp
-var a = new AuthorsTable("a");
+var a = Sql.Table<IAuthorsTable>("a");
 var query = Sql
     .Select(a.Name)
     .Distinct()
@@ -164,7 +189,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## Predicates
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 var query = Sql
     .Select()
     .From(b)
@@ -173,7 +198,7 @@ var query = Sql
 // SELECT * FROM books b WHERE b.name IS NULL AND b.rating <= @p1
 ```
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 var query = Sql
     .Select()
     .From(b)
@@ -187,7 +212,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## LIKE predicate
 ```csharp
-var a = new AuthorsTable("a");
+var a = Sql.Table<IAuthorsTable>("a");
 var query = Sql
     .Select()
     .From(a)
@@ -198,7 +223,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## IN predicate
 ```csharp
-var a = new AuthorsTable("a");
+var a = Sql.Table<IAuthorsTable>("a");
 var query = Sql
     .Select()
     .From(a)
@@ -207,8 +232,8 @@ var query = Sql
 // SELECT * FROM authors a WHERE a.id IN @p1
 ```
 ```csharp
-var a = new AuthorsTable("a");
-var b = new BooksTable("b");
+var a = Sql.Table<IAuthorsTable>("a");
+var b = Sql.Table<IBooksTable>("b");
 
 var subQuery = Sql
     .Select(b.AuthorId)
@@ -225,8 +250,8 @@ var query = Sql
 [up &#8593;](#examples)
 ## EXISTS predicate
 ```csharp
-var a = new AuthorsTable("a");
-var b = new BooksTable("b");
+var a = Sql.Table<IAuthorsTable>("a");
+var b = Sql.Table<IBooksTable>("b");
 
 var subQuery = Sql
     .Select()
@@ -243,7 +268,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## BETWEEN predicate
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 var query = Sql
     .Select()
     .From(b)
@@ -254,8 +279,8 @@ var query = Sql
 [up &#8593;](#examples)
 ## JOIN ON clause
 ```csharp
-var a = new AuthorsTable("a");
-var b = new BooksTable("b");
+var a = Sql.Table<IAuthorsTable>("a");
+var b = Sql.Table<IBooksTable>("b");
 var query = Sql
     .Select()
     .Join(b, a.Id == b.AuthorId) // also LEFT, RIGHT, FULL JOIN
@@ -266,7 +291,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## ORDER BY clause
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 var query = Sql
     .Select()
     .OrderByDesc(b.Rating)
@@ -277,7 +302,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## GROUP BY clause
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 var query = Sql
     .Select(b.AuthorId, Sql.Count())
     .GroupBy(b.AuthorId)
@@ -288,8 +313,8 @@ var query = Sql
 [up &#8593;](#examples)
 ## Multiple queries
 ```csharp
-var a = new AuthorsTable();
-var b = new BooksTable();
+var a = Sql.Table<IAuthorsTable>();
+var b = Sql.Table<IBooksTable>();
 MultipleQuery query = Sql
     .Multiple(
         Sql.Select().From(a),
@@ -301,7 +326,7 @@ MultipleQuery query = Sql
 [up &#8593;](#examples)
 ## HAVING clause
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 var query = Sql
     .Select(b.AuthorId, Sql.Count())
     .GroupBy(b.AuthorId)
@@ -313,7 +338,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## DELETE query
 ```csharp
-var b = new BooksTable();
+var b = Sql.Table<IBooksTable>();
 var query = Sql
     .Delete(b)
     .Where(b.Id == 1);
@@ -323,7 +348,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## INSERT query
 ```csharp
-var a = new AuthorsTable();
+var a = Sql.Table<IAuthorsTable>();
 var query = Sql
     .Insert(a)
     .Values(a.Id, 1)
@@ -334,7 +359,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## UPDATE query
 ```csharp
-var b = new BooksTable();
+var b = Sql.Table<IBooksTable>();
 var query = Sql
     .Update(b)
     .Set(b.Rating, b.Rating + 1)
@@ -345,7 +370,7 @@ var query = Sql
 [up &#8593;](#examples)
 ## PostgreSQL OFFSET and LIMIT clauses
 ```csharp
-var a = new AuthorsTable("a");
+var a = Sql.Table<IAuthorsTable>("a");
 PgSelectQuery query = PgSql
     .Select()
     .From(a)
@@ -358,7 +383,7 @@ PgSelectQuery query = PgSql
 [up &#8593;](#examples)
 ## PostgreSQL UPDATE RETURNING clause
 ```csharp
-var b = new BooksTable();
+var b = Sql.Table<IBooksTable>();
 PgUpdateQuery query = PgSql
     .Update(b)
     .Set(b.Rating, b.Rating + 1)
@@ -369,7 +394,7 @@ PgUpdateQuery query = PgSql
 [up &#8593;](#examples)
 ## PostgreSQL INSERT RETURNING clause
 ```csharp
-var b = new BooksTable();
+var b = Sql.Table<IBooksTable>();
 PgInsertQuery query = PgSql
     .Insert(b)
     .Values(b.Name, "name")
@@ -380,7 +405,7 @@ PgInsertQuery query = PgSql
 [up &#8593;](#examples)
 ## PostgreSQL DELETE RETURNING clause
 ```csharp
-var b = new BooksTable();
+var b = Sql.Table<IBooksTable>();
 PgInsertQuery query = PgSql
     .Delete(b)
     .Returning();
@@ -390,7 +415,7 @@ PgInsertQuery query = PgSql
 [up &#8593;](#examples)
 ## PostgreSQL INSERT ON CONFLICT DO clause
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 PgInsertQuery query = PgSql
     .Insert(b)
     .Values(b.Id, 1)
@@ -410,7 +435,7 @@ PgInsertQuery query = PgSql
 [up &#8593;](#examples)
 ## PostgreSQL SELECT FOR clause
 ```csharp
-var b = new BooksTable("b");
+var b = Sql.Table<IBooksTable>("b");
 PgSelectQuery query = PgSql
     .Select()
     .From(b)

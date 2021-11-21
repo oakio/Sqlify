@@ -9,7 +9,7 @@ namespace SqlDsl.Tests.Core.Predicates
         [Test]
         public void Test()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
             SelectQuery query = Sql.Select().From(u);
 
             var expression = new ExistsExpression<SelectQuery>(query);

@@ -9,7 +9,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Delete_from_table_where()
         {
-            var b = new BooksTable();
+            var b = Sql.Table<IBooksTable>();
 
             PgDeleteQuery query = PgSql
                 .Delete(b)
@@ -21,7 +21,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Delete_from_table_alias_where()
         {
-            var b = new BooksTable("b");
+            var b = Sql.Table<IBooksTable>("b");
 
             PgDeleteQuery query = PgSql
                 .Delete(b)
@@ -33,7 +33,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Delete_from_table_with_returning()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgDeleteQuery query = PgSql
                 .Delete(u)
@@ -45,7 +45,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Delete_from_table_with_returning_columns()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgDeleteQuery query = PgSql
                 .Delete(u)
@@ -57,7 +57,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Delete_from_table_alias_with_returning_columns()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             PgDeleteQuery query = PgSql
                 .Delete(u)

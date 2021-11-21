@@ -8,7 +8,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -20,7 +20,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery query = Sql
                 .Select()
@@ -32,7 +32,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<string> query = Sql
                 .Select(u.Name)
@@ -44,7 +44,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<string> query = Sql
                 .Select(u.Name)
@@ -56,7 +56,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_distinct_column_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<string> query = Sql
                 .Select(u.Name)
@@ -69,7 +69,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_distinct_column_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<string> query = Sql
                 .Select(u.Name)
@@ -82,7 +82,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_MAX_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Max(u.Age))
@@ -94,7 +94,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_MAX_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Max(u.Age))
@@ -106,7 +106,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_MIN_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Min(u.Age))
@@ -118,7 +118,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_MIN_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Min(u.Age))
@@ -130,7 +130,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_AVG_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Avg(u.Age))
@@ -142,7 +142,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_AVG_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Avg(u.Age))
@@ -154,7 +154,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_SUM_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age))
@@ -166,7 +166,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_SUM_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age))
@@ -178,7 +178,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_order_by()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -192,7 +192,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_alias_order_by()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery query = Sql
                 .Select()
@@ -206,7 +206,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_group_by()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -219,7 +219,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_alias_group_by()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery query = Sql
                 .Select()
@@ -232,7 +232,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_COUNT_group_by_order_by_COUNT()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select(u.Name, Sql.Count())
@@ -246,7 +246,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -259,7 +259,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_alias_where()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery query = Sql
                 .Select()
@@ -272,7 +272,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_column_in()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -285,7 +285,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_column_not_in()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -298,7 +298,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_column_between()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -311,7 +311,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_column_like()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -324,8 +324,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_left_join_table_on()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable("b");
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
 
             SelectQuery query = Sql
                 .Select()
@@ -338,8 +338,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_right_join_table_on()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable("b");
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
 
             SelectQuery query = Sql
                 .Select()
@@ -352,8 +352,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_join_table_on()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable("b");
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
 
             SelectQuery query = Sql
                 .Select()
@@ -366,8 +366,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_full_join_table_on()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable("b");
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
 
             SelectQuery query = Sql
                 .Select()
@@ -380,13 +380,13 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_select()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(u.Id)
                 .From(Sql
                         .Select()
-                        .From(new UsersTable()),
+                        .From(Sql.Table<IUsersTable>()),
                     u
                 );
 
@@ -396,8 +396,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_column_in_select()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable("b");
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
 
             SelectQuery query = Sql
                 .Select()
@@ -410,8 +410,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_column_not_in_select()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable("b");
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
 
             SelectQuery query = Sql
                 .Select()
@@ -424,8 +424,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_exists()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable("b");
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
 
             SelectQuery query = Sql
                 .Select()
@@ -438,8 +438,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_not_exists()
         {
-            var a = new AuthorsTable("a");
-            var b = new BooksTable("b");
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
 
             SelectQuery query = Sql
                 .Select()
@@ -452,7 +452,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_is_null()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -465,7 +465,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_from_table_where_is_not_null()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -478,7 +478,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_alias_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(u.Id.As("UserId"))
@@ -490,7 +490,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_alias_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(u.Id.As("UserId"))
@@ -502,7 +502,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_function_alias_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Max(u.Age).As("max_age"))
@@ -514,7 +514,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_function_alias_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Max(u.Age).As("max_age"))
@@ -526,7 +526,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_union_select()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select()
@@ -543,7 +543,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_union_all_select()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(u.Id)
@@ -560,7 +560,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_COUNT_from_table_group_by_having_COUNT()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery query = Sql
                 .Select(u.Name, Sql.Count())
@@ -574,7 +574,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_COUNT_from_table_alias_group_by_having_COUNT()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery query = Sql
                 .Select(u.Name, Sql.Count())
@@ -588,7 +588,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_expression_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(u.Age + 10)
@@ -600,7 +600,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_column_expression_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(u.Age + 10)
@@ -612,7 +612,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_function_arg_expression_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age + 1))
@@ -624,7 +624,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_function_arg_expression_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age + 1))
@@ -636,7 +636,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_function_expression_from_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age) + 1)
@@ -648,7 +648,7 @@ namespace SqlDsl.Tests
         [Test]
         public void Select_function_expression_from_table_alias()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             SelectQuery<int> query = Sql
                 .Select(Sql.Sum(u.Age) + 1)
@@ -660,8 +660,8 @@ namespace SqlDsl.Tests
         [Test]
         public void Multiple_Select_from_table()
         {
-            var a = new AuthorsTable();
-            var b = new BooksTable();
+            var a = Sql.Table<IAuthorsTable>();
+            var b = Sql.Table<IBooksTable>();
 
             MultipleQuery query = Sql
                 .Multiple(

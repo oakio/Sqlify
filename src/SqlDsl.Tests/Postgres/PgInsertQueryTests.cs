@@ -10,7 +10,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Insert_into_table()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgInsertQuery query = PgSql
                 .Insert(u)
@@ -23,7 +23,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Insert_into_table_with_returning()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgInsertQuery query = PgSql
                 .Insert(u)
@@ -37,7 +37,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Insert_into_table_with_returning_columns()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgInsertQuery query = PgSql
                 .Insert(u)
@@ -51,7 +51,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Insert_into_table_alias_with_returning_columns()
         {
-            var u = new UsersTable("u");
+            var u = Sql.Table<IUsersTable>("u");
 
             PgInsertQuery query = PgSql
                 .Insert(u)
@@ -65,7 +65,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Insert_into_table_on_conflict_columns_do_nothing()
         {
-            var b = new BooksTable();
+            var b = Sql.Table<IBooksTable>();
 
             PgInsertQuery query = PgSql
                 .Insert(b)
@@ -82,7 +82,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Insert_into_table_alias_on_conflict_columns_do_nothing()
         {
-            var b = new BooksTable("b");
+            var b = Sql.Table<IBooksTable>("b");
 
             PgInsertQuery query = PgSql
                 .Insert(b)
@@ -98,7 +98,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Insert_into_table_on_conflict_columns_do_update()
         {
-            var b = new BooksTable();
+            var b = Sql.Table<IBooksTable>();
 
             PgInsertQuery query = PgSql
                 .Insert(b)
@@ -118,7 +118,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Insert_into_table_alias_on_conflict_columns_do_update()
         {
-            var b = new BooksTable("b");
+            var b = Sql.Table<IBooksTable>("b");
 
             PgInsertQuery query = PgSql
                 .Insert(b)

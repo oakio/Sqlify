@@ -9,7 +9,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Select_from_table_with_limit()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgSelectQuery query = PgSql
                 .Select()
@@ -23,7 +23,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Select_from_table_with_offset()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgSelectQuery query = PgSql
                 .Select()
@@ -37,7 +37,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Select_from_table_with_offset_and_limit()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgSelectQuery query = PgSql
                 .Select()
@@ -52,7 +52,7 @@ namespace SqlDsl.Tests.Postgres
         [Test]
         public void Select_from_table_with_for_update_mode()
         {
-            var u = new UsersTable();
+            var u = Sql.Table<IUsersTable>();
 
             PgSelectQuery query = PgSql
                 .Select()
