@@ -5,7 +5,7 @@ namespace SqlDsl
 {
     public class InsertQuery : InsertQueryBase<InsertQuery>
     {
-        public InsertQuery(Table table) : base(table)
+        public InsertQuery(ITable table) : base(table)
         {
             string tableAlias = table.GetAlias();
             if (!string.IsNullOrWhiteSpace(tableAlias))

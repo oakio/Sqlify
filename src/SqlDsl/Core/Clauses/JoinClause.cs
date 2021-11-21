@@ -5,10 +5,10 @@ namespace SqlDsl.Core.Clauses
     public readonly struct JoinClause : ISqlFormattable
     {
         private readonly string _type;
-        private readonly Table _table;
+        private readonly ITable _table;
         private readonly PredicateExpression _condition;
 
-        public JoinClause(string type, Table table, PredicateExpression condition)
+        public JoinClause(string type, ITable table, PredicateExpression condition)
         {
             _type = type;
             _condition = condition;

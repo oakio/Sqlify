@@ -1,3 +1,4 @@
+using SqlDsl.Core;
 using SqlDsl.Core.Expressions;
 
 namespace SqlDsl.Postgres
@@ -10,10 +11,10 @@ namespace SqlDsl.Postgres
 
         public static PgSelectQuery<T> Select<T>(Expression<T> column) => new PgSelectQuery<T>().Select(column);
 
-        public static PgInsertQuery Insert(Table table) => new PgInsertQuery(table);
+        public static PgInsertQuery Insert(ITable table) => new PgInsertQuery(table);
 
-        public static PgUpdateQuery Update(Table table) => new PgUpdateQuery(table);
+        public static PgUpdateQuery Update(ITable table) => new PgUpdateQuery(table);
 
-        public static PgDeleteQuery Delete(Table table) => new PgDeleteQuery(table);
+        public static PgDeleteQuery Delete(ITable table) => new PgDeleteQuery(table);
     }
 }

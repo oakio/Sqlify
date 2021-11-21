@@ -2,10 +2,10 @@ namespace SqlDsl.Core.Expressions
 {
     public readonly struct TableAliasExpression : ISqlFormattable
     {
-        private readonly Table _table;
+        private readonly ITable _table;
         private readonly bool _useAs;
 
-        public TableAliasExpression(Table table, bool useAs)
+        public TableAliasExpression(ITable table, bool useAs)
         {
             _table = table;
             _useAs = useAs;

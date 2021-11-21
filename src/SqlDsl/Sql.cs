@@ -12,11 +12,11 @@ namespace SqlDsl
 
         public static SelectQuery<T> Select<T>(Expression<T> column) => new SelectQuery<T>().Select(column);
 
-        public static InsertQuery Insert(Table table) => new InsertQuery(table);
+        public static InsertQuery Insert(ITable table) => new InsertQuery(table);
 
-        public static UpdateQuery Update(Table table) => new UpdateQuery(table);
+        public static UpdateQuery Update(ITable table) => new UpdateQuery(table);
 
-        public static DeleteQuery Delete(Table table) => new DeleteQuery(table);
+        public static DeleteQuery Delete(ITable table) => new DeleteQuery(table);
 
         public static MultipleQuery Multiple(params ISelectQuery[] queries) => new MultipleQuery(queries);
 

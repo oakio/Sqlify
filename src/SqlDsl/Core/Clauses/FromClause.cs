@@ -3,17 +3,17 @@ namespace SqlDsl.Core.Clauses
     public readonly struct FromClause : ISqlFormattable
     {
         private readonly ISelectQuery _nested;
-        private readonly Table _alias;
-        private readonly Table _table;
+        private readonly ITable _alias;
+        private readonly ITable _table;
 
-        public FromClause(Table table)
+        public FromClause(ITable table)
         {
             _table = table;
             _nested = null;
             _alias = null;
         }
 
-        public FromClause(ISelectQuery nested, Table alias)
+        public FromClause(ISelectQuery nested, ITable alias)
         {
             _nested = nested;
             _alias = alias;

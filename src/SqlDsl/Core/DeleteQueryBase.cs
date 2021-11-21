@@ -11,7 +11,7 @@ namespace SqlDsl.Core
         private List<JoinClause> _joinClauses;
         private PredicateExpression _whereClause;
 
-        protected DeleteQueryBase(Table table)
+        protected DeleteQueryBase(ITable table)
         {
             _table = new TableAliasExpression(table, false);
         }
@@ -36,7 +36,7 @@ namespace SqlDsl.Core
             return Where(condition);
         }
 
-        public TDeleteQuery Join<T>(T table, PredicateExpression condition) where T : Table
+        public TDeleteQuery Join(ITable table, PredicateExpression condition)
         {
             var join = new JoinClause(" JOIN ", table, condition);
             ListUtils.Add(ref _joinClauses, join);

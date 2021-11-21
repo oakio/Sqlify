@@ -8,7 +8,7 @@ namespace SqlDsl.Postgres
     {
         private ReturningClause? _returningClause;
 
-        public PgDeleteQuery(Table table) : base(table)
+        public PgDeleteQuery(ITable table) : base(table)
         {
         }
 

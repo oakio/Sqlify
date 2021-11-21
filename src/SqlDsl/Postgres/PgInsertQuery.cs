@@ -10,7 +10,7 @@ namespace SqlDsl.Postgres
         private OnConflictClause? _onConflictClause;
         private ReturningClause? _returningClause;
 
-        public PgInsertQuery(Table table) : base(table)
+        public PgInsertQuery(ITable table) : base(table)
         {
         }
 

@@ -36,13 +36,13 @@ namespace SqlDsl.Core
             return Self();
         }
 
-        public TSelectQuery From<T>(T table) where T : Table
+        public TSelectQuery From(ITable table)
         {
             _fromClause = new FromClause(table);
             return Self();
         }
 
-        public TSelectQuery From<T>(ISelectQuery nested, T alias) where T : Table
+        public TSelectQuery From(ISelectQuery nested, ITable alias)
         {
             _fromClause = new FromClause(nested, alias);
             return Self();
@@ -68,15 +68,15 @@ namespace SqlDsl.Core
             return Where(condition);
         }
 
-        public TSelectQuery LeftJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" LEFT JOIN ", table, condition);
+        public TSelectQuery LeftJoin(ITable table, PredicateExpression condition) => Join(" LEFT JOIN ", table, condition);
 
-        public TSelectQuery RightJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" RIGHT JOIN ", table, condition);
+        public TSelectQuery RightJoin(ITable table, PredicateExpression condition) => Join(" RIGHT JOIN ", table, condition);
 
-        public TSelectQuery Join<T>(T table, PredicateExpression condition) where T : Table => Join(" JOIN ", table, condition);
+        public TSelectQuery Join(ITable table, PredicateExpression condition) => Join(" JOIN ", table, condition);
 
-        public TSelectQuery FullJoin<T>(T table, PredicateExpression condition) where T : Table => Join(" FULL JOIN ", table, condition);
+        public TSelectQuery FullJoin(ITable table, PredicateExpression condition) => Join(" FULL JOIN ", table, condition);
 
-        private TSelectQuery Join<T>(string type, T table, PredicateExpression condition) where T : Table
+        private TSelectQuery Join(string type, ITable table, PredicateExpression condition)
         {
             var join = new JoinClause(type, table, condition);
             ListUtils.Add(ref _joinClauses, join);

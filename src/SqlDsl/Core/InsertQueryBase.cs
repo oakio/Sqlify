@@ -8,7 +8,7 @@ namespace SqlDsl.Core
         private readonly TableAliasExpression _table;
         private readonly List<IInsertValue> _values;
 
-        protected InsertQueryBase(Table table)
+        protected InsertQueryBase(ITable table)
         {
             _table = new TableAliasExpression(table, true);
             _values = new List<IInsertValue>();

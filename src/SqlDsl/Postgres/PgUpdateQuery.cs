@@ -8,7 +8,7 @@ namespace SqlDsl.Postgres
     {
         private ReturningClause? _returningClause;
 
-        public PgUpdateQuery(Table table) : base(table)
+        public PgUpdateQuery(ITable table) : base(table)
         {
         }
 

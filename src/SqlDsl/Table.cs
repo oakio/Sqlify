@@ -1,8 +1,9 @@
+using SqlDsl.Core;
 using SqlDsl.Core.Expressions;
 
 namespace SqlDsl
 {
-    public class Table
+    public class Table : ITable
     {
         private readonly string _name;
 

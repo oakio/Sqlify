@@ -5,7 +5,7 @@ namespace SqlDsl
 {
     public class DeleteQuery : DeleteQueryBase<DeleteQuery>
     {
-        public DeleteQuery(Table table) : base(table)
+        public DeleteQuery(ITable table) : base(table)
         {
             string tableAlias = table.GetAlias();
             if (!string.IsNullOrWhiteSpace(tableAlias))

@@ -10,7 +10,7 @@ namespace SqlDsl.Core
         private readonly List<AssignExpression> _setExpressions;
         private PredicateExpression _whereClause;
 
-        protected UpdateQueryBase(Table table)
+        protected UpdateQueryBase(ITable table)
         {
             _table = new TableAliasExpression(table, false);
             _setExpressions = new List<AssignExpression>();

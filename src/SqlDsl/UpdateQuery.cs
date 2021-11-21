@@ -5,7 +5,7 @@ namespace SqlDsl
 {
     public class UpdateQuery : UpdateQueryBase<UpdateQuery>
     {
-        public UpdateQuery(Table table) : base(table)
+        public UpdateQuery(ITable table) : base(table)
         {
             string tableAlias = table.GetAlias();
             if (!string.IsNullOrWhiteSpace(tableAlias))
