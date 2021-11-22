@@ -10,6 +10,7 @@
     <PackageProjectUrl>https://github.com/oakio/sqldsl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/oakio/sqldsl</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <AssemblyName>SqlDsl</AssemblyName>
     <RootNamespace>SqlDsl</RootNamespace>
     <NoWarn>7035;1591</NoWarn>
@@ -23,6 +24,10 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
