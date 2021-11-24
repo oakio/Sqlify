@@ -1,14 +1,16 @@
+using SqlDsl.Core.Expressions;
+
 namespace SqlDsl.Core.Clauses
 {
     public readonly struct FromClause : ISqlFormattable
     {
         private readonly ISelectQuery _nested;
         private readonly ITable _alias;
-        private readonly ITable _table;
+        private readonly TableAliasExpression _table;
 
         public FromClause(ITable table)
         {
-            _table = table;
+            _table = new TableAliasExpression(table, false);
             _nested = null;
             _alias = null;
         }
@@ -17,7 +19,7 @@ namespace SqlDsl.Core.Clauses
         {
             _nested = nested;
             _alias = alias;
-            _table = null;
+            _table = default;
         }
 
         public void Format(ISqlWriter sql)
@@ -32,15 +34,25 @@ namespace SqlDsl.Core.Clauses
             else
             {
                 sql.Append(" FROM ");
-                sql.Append(_table.GetName());
-
-                string alias = _table.GetAlias();
-                if (!string.IsNullOrEmpty(alias))
-                {
-                    sql.Append(" ");
-                    sql.Append(alias);
-                }
+                _table.Format(sql);
             }
+        }
+    }
+
+    struct AliasedSubQuery : ISqlFormattable
+    {
+        private readonly ISelectQuery _query;
+
+        public AliasedSubQuery(ISelectQuery query)
+        {
+            _query = query;
+        }
+
+        public void Format(ISqlWriter sql)
+        {
+            sql.Append("(");
+            _query.Format(sql);
+            sql.Append(")");
         }
     }
 }
