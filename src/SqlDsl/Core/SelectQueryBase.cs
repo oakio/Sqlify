@@ -144,8 +144,8 @@ namespace SqlDsl.Core
             }
             else
             {
-                sql.Append(_distinct ? "SELECT DISTINCT " : "SELECT ");
-                sql.Append("", ", ", _selectClause);
+                string select = _distinct ? "SELECT DISTINCT " : "SELECT ";
+                sql.Append(select, ", ", _selectClause);
             }
 
             _fromClause.Format(sql);

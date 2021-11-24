@@ -13,6 +13,6 @@ namespace SqlDsl.Core
 
         public void Add(ISelectQuery query) => _queries.Add(query);
 
-        public void Format(ISqlWriter sql) => sql.Append(string.Empty, "; ", _queries);
+        public void Format(ISqlWriter sql) => sql.Append("; ", _queries);
     }
 }
