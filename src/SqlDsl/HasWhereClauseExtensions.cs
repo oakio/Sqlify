@@ -1,6 +1,7 @@
+using SqlDsl.Core;
 using SqlDsl.Core.Predicates;
 
-namespace SqlDsl.Core
+namespace SqlDsl
 {
     public static class HasWhereClauseExtensions
     {
