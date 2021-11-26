@@ -32,8 +32,6 @@ namespace SqlDsl.Core.Expressions
 
         public PredicateExpression IsNotNull => new IsNotNullExpression<T>(this);
 
-        public static ColumnExpression<T> Asterisk = new ColumnExpression<T>("*");
-
         public override void Format(ISqlWriter sql) => sql.Append(Name);
     }
 }

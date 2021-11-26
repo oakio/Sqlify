@@ -27,7 +27,7 @@ namespace SqlDsl
 
         public static PredicateExpression And(PredicateExpression left, PredicateExpression right) => new AndExpression(left, right);
 
-        public static FunctionExpression<int> Count() => new FunctionExpression<int>("COUNT", ColumnExpression<int>.Asterisk);
+        public static FunctionExpression<int> Count() => new FunctionExpression<int>("COUNT", AsteriskExpression.Instance);
 
         public static FunctionExpression<T> Max<T>(Expression<T> column) => Create("MAX", column);
 
