@@ -671,5 +671,29 @@ namespace SqlDsl.Tests
 
             query.ShouldBe("SELECT * FROM authors; SELECT * FROM books");
         }
+
+        [Test]
+        public void Select_column_cast_from_table()
+        {
+            var b = Sql.Table<IBooksTable>();
+
+            SelectQuery<string> query = Sql
+                .Select(b.Rating.Cast<string>("VARCHAR"))
+                .From(b);
+
+            query.ShouldBe("SELECT CAST(books.rating AS VARCHAR) FROM books");
+        }
+
+        [Test]
+        public void Select_column_cast_from_table_alias()
+        {
+            var b = Sql.Table<IBooksTable>("b");
+
+            SelectQuery<string> query = Sql
+                .Select(b.Rating.Cast<string>("VARCHAR"))
+                .From(b);
+
+            query.ShouldBe("SELECT CAST(b.rating AS VARCHAR) FROM books b");
+        }
     }
 }

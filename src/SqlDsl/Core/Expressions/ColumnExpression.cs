@@ -32,6 +32,8 @@ namespace SqlDsl.Core.Expressions
 
         public PredicateExpression IsNotNull => new IsNotNullExpression<T>(this);
 
+        public CastExpression<TTarget> Cast<TTarget>(string dataType) => new CastExpression<TTarget>(this, dataType);
+
         public override void Format(ISqlWriter sql) => sql.Append(Name);
     }
 }
