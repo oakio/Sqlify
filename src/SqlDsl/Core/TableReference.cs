@@ -1,11 +1,11 @@
-namespace SqlDsl.Core.Expressions
+namespace SqlDsl.Core
 {
-    public readonly struct TableAliasExpression : ISqlFormattable
+    public readonly struct TableReference : ISqlFormattable
     {
         private readonly ITable _table;
         private readonly bool _useAs;
 
-        public TableAliasExpression(ITable table, bool useAs)
+        public TableReference(ITable table, bool useAs)
         {
             _table = table;
             _useAs = useAs;

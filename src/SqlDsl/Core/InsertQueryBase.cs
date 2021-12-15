@@ -5,12 +5,12 @@ namespace SqlDsl.Core
 {
     public abstract class InsertQueryBase<TInsertQuery> : IQuery where TInsertQuery : InsertQueryBase<TInsertQuery>
     {
-        private readonly TableAliasExpression _table;
+        private readonly TableReference _table;
         private readonly List<IInsertValue> _values;
 
         protected InsertQueryBase(ITable table)
         {
-            _table = new TableAliasExpression(table, true);
+            _table = new TableReference(table, true);
             _values = new List<IInsertValue>();
         }
 

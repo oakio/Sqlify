@@ -1,16 +1,14 @@
-using SqlDsl.Core.Expressions;
-
 namespace SqlDsl.Core.Clauses
 {
     public readonly struct FromClause : ISqlFormattable
     {
         private readonly ISelectQuery _nested;
         private readonly ITable _alias;
-        private readonly TableAliasExpression _table;
+        private readonly TableReference _table;
 
         public FromClause(ITable table)
         {
-            _table = new TableAliasExpression(table, false);
+            _table = new TableReference(table, false);
             _nested = null;
             _alias = null;
         }

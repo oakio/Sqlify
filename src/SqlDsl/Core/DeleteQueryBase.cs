@@ -1,19 +1,18 @@
 using System.Collections.Generic;
 using SqlDsl.Core.Clauses;
-using SqlDsl.Core.Expressions;
 using SqlDsl.Core.Predicates;
 
 namespace SqlDsl.Core
 {
     public abstract class DeleteQueryBase<TDeleteQuery> : IQuery, IHasWhereClause<TDeleteQuery> where TDeleteQuery : DeleteQueryBase<TDeleteQuery>
     {
-        private readonly TableAliasExpression _table;
+        private readonly TableReference _table;
         private List<JoinClause> _joinClauses;
         private PredicateExpression _whereClause;
 
         protected DeleteQueryBase(ITable table)
         {
-            _table = new TableAliasExpression(table, false);
+            _table = new TableReference(table, false);
         }
 
         public TDeleteQuery Where(PredicateExpression condition)
