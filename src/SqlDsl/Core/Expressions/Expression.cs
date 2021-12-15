@@ -13,35 +13,35 @@ namespace SqlDsl.Core.Expressions
     {
         public AliasExpression<T> As(string alias) => new AliasExpression<T>(this, alias);
 
-        public static PredicateExpression operator ==(Expression<T> left, T right) =>
+        public static Predicate operator ==(Expression<T> left, T right) =>
             right == null
-                ? (PredicateExpression)new IsNullExpression<T>(left)
-                : new EqExpression<T>(left, AsParam(right));
+                ? (Predicate)new IsNullPredicate<T>(left)
+                : new EqPredicate<T>(left, AsParam(right));
 
-        public static PredicateExpression operator ==(Expression<T> left, Expression<T> right) => new EqExpression<T>(left, right);
+        public static Predicate operator ==(Expression<T> left, Expression<T> right) => new EqPredicate<T>(left, right);
 
-        public static PredicateExpression operator !=(Expression<T> left, T right) =>
+        public static Predicate operator !=(Expression<T> left, T right) =>
             right == null
-                ? (PredicateExpression)new IsNotNullExpression<T>(left)
-                : new NeqExpression<T>(left, AsParam(right));
+                ? (Predicate)new IsNotNullPredicate<T>(left)
+                : new NeqPredicate<T>(left, AsParam(right));
 
-        public static PredicateExpression operator !=(Expression<T> left, Expression<T> right) => new NeqExpression<T>(left, right);
+        public static Predicate operator !=(Expression<T> left, Expression<T> right) => new NeqPredicate<T>(left, right);
 
-        public static PredicateExpression operator >(Expression<T> left, T right) => new GtExpression<T>(left, AsParam(right));
+        public static Predicate operator >(Expression<T> left, T right) => new GtPredicate<T>(left, AsParam(right));
 
-        public static PredicateExpression operator >(Expression<T> left, Expression<T> right) => new GtExpression<T>(left, right);
+        public static Predicate operator >(Expression<T> left, Expression<T> right) => new GtPredicate<T>(left, right);
 
-        public static PredicateExpression operator <(Expression<T> left, T right) => new LtExpression<T>(left, AsParam(right));
+        public static Predicate operator <(Expression<T> left, T right) => new LtPredicate<T>(left, AsParam(right));
 
-        public static PredicateExpression operator <(Expression<T> left, Expression<T> right) => new LtExpression<T>(left, right);
+        public static Predicate operator <(Expression<T> left, Expression<T> right) => new LtPredicate<T>(left, right);
 
-        public static PredicateExpression operator >=(Expression<T> left, T right) => new GteExpression<T>(left, AsParam(right));
+        public static Predicate operator >=(Expression<T> left, T right) => new GtePredicate<T>(left, AsParam(right));
 
-        public static PredicateExpression operator >=(Expression<T> left, Expression<T> right) => new GteExpression<T>(left, right);
+        public static Predicate operator >=(Expression<T> left, Expression<T> right) => new GtePredicate<T>(left, right);
 
-        public static PredicateExpression operator <=(Expression<T> left, T right) => new LteExpression<T>(left, AsParam(right));
+        public static Predicate operator <=(Expression<T> left, T right) => new LtePredicate<T>(left, AsParam(right));
 
-        public static PredicateExpression operator <=(Expression<T> left, Expression<T> right) => new LteExpression<T>(left, right);
+        public static Predicate operator <=(Expression<T> left, Expression<T> right) => new LtePredicate<T>(left, right);
 
         public static BinaryExpression<T> operator +(Expression<T> left, Expression<T> right) => new AddExpression<T>(left, right);
 

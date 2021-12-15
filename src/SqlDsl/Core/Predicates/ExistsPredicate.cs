@@ -1,10 +1,10 @@
 namespace SqlDsl.Core.Predicates
 {
-    public sealed class ExistsExpression<TSelectQuery> : PredicateExpression where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
+    public sealed class ExistsPredicate<TSelectQuery> : Predicate where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
     {
         private readonly TSelectQuery _query;
 
-        public ExistsExpression(TSelectQuery query)
+        public ExistsPredicate(TSelectQuery query)
         {
             _query = query;
         }

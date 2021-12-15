@@ -3,12 +3,12 @@ using SqlDsl.Core.Expressions;
 
 namespace SqlDsl.Core.Predicates
 {
-    public sealed class InExpression<T> : PredicateExpression
+    public sealed class InPredicate<T> : Predicate
     {
         private readonly ColumnExpression<T> _left;
         private readonly IReadOnlyCollection<T> _right;
 
-        public InExpression(ColumnExpression<T> left, IReadOnlyCollection<T> right)
+        public InPredicate(ColumnExpression<T> left, IReadOnlyCollection<T> right)
         {
             _left = left;
             _right = right;

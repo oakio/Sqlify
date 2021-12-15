@@ -8,7 +8,7 @@ namespace SqlDsl.Core
     {
         private readonly TableReference _table;
         private readonly List<AssignExpression> _setExpressions;
-        private PredicateExpression _whereClause;
+        private Predicate _whereClause;
 
         protected UpdateQueryBase(ITable table)
         {
@@ -34,7 +34,7 @@ namespace SqlDsl.Core
             return Self();
         }
 
-        public TUpdateQuery Where(PredicateExpression condition)
+        public TUpdateQuery Where(Predicate condition)
         {
             _whereClause = _whereClause == null
                 ? condition
@@ -44,13 +44,13 @@ namespace SqlDsl.Core
 
         public TUpdateQuery WhereExists<TSelectQuery>(TSelectQuery query) where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
         {
-            var condition = new ExistsExpression<TSelectQuery>(query);
+            var condition = new ExistsPredicate<TSelectQuery>(query);
             return Where(condition);
         }
 
         public TUpdateQuery WhereNotExists<TSelectQuery>(TSelectQuery query) where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
         {
-            var condition = new NotExistsExpression<TSelectQuery>(query);
+            var condition = new NotExistsPredicate<TSelectQuery>(query);
             return Where(condition);
         }
 

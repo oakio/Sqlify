@@ -7,47 +7,47 @@ namespace SqlDsl
     {
         public static TQuery Where<TQuery>(
             this TQuery query,
-            PredicateExpression condition1,
-            PredicateExpression condition2)
+            Predicate condition1,
+            Predicate condition2)
             where TQuery : IHasWhereClause<TQuery>
         {
-            PredicateExpression condition = condition1.And(condition2);
+            Predicate condition = condition1.And(condition2);
             return query.Where(condition);
         }
 
         public static TQuery Where<TQuery>(
             this TQuery query,
-            PredicateExpression condition1,
-            PredicateExpression condition2,
-            PredicateExpression condition3)
+            Predicate condition1,
+            Predicate condition2,
+            Predicate condition3)
             where TQuery : IHasWhereClause<TQuery>
         {
-            PredicateExpression condition = condition1.And(condition2).And(condition3);
+            Predicate condition = condition1.And(condition2).And(condition3);
             return query.Where(condition);
         }
 
         public static TQuery Where<TQuery>(
             this TQuery query,
-            PredicateExpression condition1,
-            PredicateExpression condition2,
-            PredicateExpression condition3,
-            PredicateExpression condition4)
+            Predicate condition1,
+            Predicate condition2,
+            Predicate condition3,
+            Predicate condition4)
             where TQuery : IHasWhereClause<TQuery>
         {
-            PredicateExpression condition = condition1.And(condition2).And(condition3).And(condition4);
+            Predicate condition = condition1.And(condition2).And(condition3).And(condition4);
             return query.Where(condition);
         }
 
         public static TQuery Where<TQuery>(
             this TQuery query,
-            PredicateExpression condition1,
-            PredicateExpression condition2,
-            PredicateExpression condition3,
-            PredicateExpression condition4,
-            PredicateExpression condition5)
+            Predicate condition1,
+            Predicate condition2,
+            Predicate condition3,
+            Predicate condition4,
+            Predicate condition5)
             where TQuery : IHasWhereClause<TQuery>
         {
-            PredicateExpression condition = condition1.And(condition2).And(condition3).And(condition4).And(condition5);
+            Predicate condition = condition1.And(condition2).And(condition3).And(condition4).And(condition5);
             return query.Where(condition);
         }
     }

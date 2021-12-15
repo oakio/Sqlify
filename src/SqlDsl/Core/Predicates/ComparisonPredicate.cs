@@ -2,7 +2,7 @@ using SqlDsl.Core.Expressions;
 
 namespace SqlDsl.Core.Predicates
 {
-    public abstract class ComparisonPredicate<T> : PredicateExpression
+    public abstract class ComparisonPredicate<T> : Predicate
     {
         private readonly Expression<T> _left;
         private readonly Expression<T> _right;

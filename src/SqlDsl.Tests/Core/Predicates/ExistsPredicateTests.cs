@@ -4,7 +4,7 @@ using SqlDsl.Core.Predicates;
 namespace SqlDsl.Tests.Core.Predicates
 {
     [TestFixture]
-    public class ExistsExpressionTests
+    public class ExistsPredicateTests
     {
         [Test]
         public void Test()
@@ -12,7 +12,7 @@ namespace SqlDsl.Tests.Core.Predicates
             var u = Sql.Table<IUsersTable>();
             SelectQuery query = Sql.Select().From(u);
 
-            var expression = new ExistsExpression<SelectQuery>(query);
+            var expression = new ExistsPredicate<SelectQuery>(query);
 
             expression.ShouldBe("EXISTS (SELECT * FROM users)");
         }

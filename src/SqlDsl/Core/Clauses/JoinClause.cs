@@ -6,9 +6,9 @@ namespace SqlDsl.Core.Clauses
     {
         private readonly string _type;
         private readonly TableReference _table;
-        private readonly PredicateExpression _condition;
+        private readonly Predicate _condition;
 
-        public JoinClause(string type, ITable table, PredicateExpression condition)
+        public JoinClause(string type, ITable table, Predicate condition)
         {
             _type = type;
             _condition = condition;

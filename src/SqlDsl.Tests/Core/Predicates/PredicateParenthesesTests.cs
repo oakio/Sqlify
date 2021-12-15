@@ -6,15 +6,15 @@ using SqlDsl.Core.Predicates;
 namespace SqlDsl.Tests.Core.Predicates
 {
     [TestFixture]
-    public class PredicateExpressionTests
+    public class PredicateParenthesesTests
     {
-        private static readonly PredicateExpression P1 = Create("c1", 1);
-        private static readonly PredicateExpression P2 = Create("c2", 2);
-        private static readonly PredicateExpression P3 = Create("c3", 3);
-        private static readonly PredicateExpression P4 = Create("c4", 4);
+        private static readonly Predicate P1 = Create("c1", 1);
+        private static readonly Predicate P2 = Create("c2", 2);
+        private static readonly Predicate P3 = Create("c3", 3);
+        private static readonly Predicate P4 = Create("c4", 4);
 
         [TestCaseSource(nameof(Cases))]
-        public void Test(string lineNo, PredicateExpression expression, string expected) => expression.ShouldBe(expected);
+        public void Test(string lineNo, Predicate expression, string expected) => expression.ShouldBe(expected);
 
         private static readonly object[] Cases =
         {
@@ -55,12 +55,12 @@ namespace SqlDsl.Tests.Core.Predicates
             Case(Sql.Or(P1.And(P2), P3.And(P4)), "c1 = @p1 AND c2 = @p2 OR c3 = @p3 AND c4 = @p4")
         };
 
-        private static object[] Case(PredicateExpression expression, string expected, [CallerLineNumber] int lineNo = 0) => new object[]
+        private static object[] Case(Predicate expression, string expected, [CallerLineNumber] int lineNo = 0) => new object[]
         {
             $"line #{lineNo}", expression, expected
         };
 
-        private static PredicateExpression Create(string name, int value)
+        private static Predicate Create(string name, int value)
         {
             var column = new ColumnExpression<int>(name);
             return column == value;

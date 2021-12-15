@@ -1,11 +1,11 @@
 namespace SqlDsl.Core.Predicates
 {
-    public class OrExpression : PredicateExpression
+    public class OrPredicate : Predicate
     {
-        private readonly PredicateExpression _left;
-        private readonly PredicateExpression _right;
+        private readonly Predicate _left;
+        private readonly Predicate _right;
 
-        public OrExpression(PredicateExpression left, PredicateExpression right)
+        public OrPredicate(Predicate left, Predicate right)
         {
             _left = left;
             _right = right;

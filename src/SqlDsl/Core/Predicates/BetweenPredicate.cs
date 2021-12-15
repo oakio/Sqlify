@@ -2,13 +2,13 @@ using SqlDsl.Core.Expressions;
 
 namespace SqlDsl.Core.Predicates
 {
-    public sealed class BetweenExpression<T> : PredicateExpression
+    public sealed class BetweenPredicate<T> : Predicate
     {
         private readonly ColumnExpression<T> _left;
         private readonly T _from;
         private readonly T _to;
 
-        public BetweenExpression(ColumnExpression<T> left, T from, T to)
+        public BetweenPredicate(ColumnExpression<T> left, T from, T to)
         {
             _left = left;
             _from = from;

@@ -23,9 +23,9 @@ namespace SqlDsl
 
         public static MultipleQuery Multiple(params ISelectQuery[] queries) => new MultipleQuery(queries);
 
-        public static PredicateExpression Or(PredicateExpression left, PredicateExpression right) => new OrExpression(left, right);
+        public static Predicate Or(Predicate left, Predicate right) => new OrPredicate(left, right);
 
-        public static PredicateExpression And(PredicateExpression left, PredicateExpression right) => new AndExpression(left, right);
+        public static Predicate And(Predicate left, Predicate right) => new AndPredicate(left, right);
 
         public static FunctionExpression<int> Count() => new FunctionExpression<int>("COUNT", AsteriskExpression.Instance);
 

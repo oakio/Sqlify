@@ -13,10 +13,10 @@ namespace SqlDsl.Core
         private List<Expression> _selectClause;
         private FromClause _fromClause;
         private List<JoinClause> _joinClauses;
-        private PredicateExpression _whereClause;
+        private Predicate _whereClause;
         private List<OrderByClause> _orderByClause;
         private List<Expression> _groupByClause;
-        private PredicateExpression _havingClause;
+        private Predicate _havingClause;
 
         protected TSelectQuery SelectColumn(Expression column)
         {
@@ -48,7 +48,7 @@ namespace SqlDsl.Core
             return Self();
         }
 
-        public TSelectQuery Where(PredicateExpression condition)
+        public TSelectQuery Where(Predicate condition)
         {
             _whereClause = _whereClause == null
                 ? condition
@@ -58,32 +58,32 @@ namespace SqlDsl.Core
 
         public TSelectQuery WhereExists<TSubQuery>(TSubQuery query) where TSubQuery : SelectQueryBase<TSubQuery>, new()
         {
-            var condition = new ExistsExpression<TSubQuery>(query);
+            var condition = new ExistsPredicate<TSubQuery>(query);
             return Where(condition);
         }
 
         public TSelectQuery WhereNotExists<TSubQuery>(TSubQuery query) where TSubQuery : SelectQueryBase<TSubQuery>, new()
         {
-            var condition = new NotExistsExpression<TSubQuery>(query);
+            var condition = new NotExistsPredicate<TSubQuery>(query);
             return Where(condition);
         }
 
-        public TSelectQuery LeftJoin(ITable table, PredicateExpression condition) => Join(" LEFT JOIN ", table, condition);
+        public TSelectQuery LeftJoin(ITable table, Predicate condition) => Join(" LEFT JOIN ", table, condition);
 
-        public TSelectQuery RightJoin(ITable table, PredicateExpression condition) => Join(" RIGHT JOIN ", table, condition);
+        public TSelectQuery RightJoin(ITable table, Predicate condition) => Join(" RIGHT JOIN ", table, condition);
 
-        public TSelectQuery Join(ITable table, PredicateExpression condition) => Join(" JOIN ", table, condition);
+        public TSelectQuery Join(ITable table, Predicate condition) => Join(" JOIN ", table, condition);
 
-        public TSelectQuery FullJoin(ITable table, PredicateExpression condition) => Join(" FULL JOIN ", table, condition);
+        public TSelectQuery FullJoin(ITable table, Predicate condition) => Join(" FULL JOIN ", table, condition);
 
-        private TSelectQuery Join(string type, ITable table, PredicateExpression condition)
+        private TSelectQuery Join(string type, ITable table, Predicate condition)
         {
             var join = new JoinClause(type, table, condition);
             ListUtils.Add(ref _joinClauses, join);
             return Self();
         }
 
-        public TSelectQuery Having(PredicateExpression condition)
+        public TSelectQuery Having(Predicate condition)
         {
             _havingClause = condition;
             return Self();

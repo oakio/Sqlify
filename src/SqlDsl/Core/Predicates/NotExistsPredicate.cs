@@ -1,10 +1,10 @@
 namespace SqlDsl.Core.Predicates
 {
-    public sealed class NotExistsExpression<TSelectQuery> : PredicateExpression where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
+    public sealed class NotExistsPredicate<TSelectQuery> : Predicate where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
     {
         private readonly TSelectQuery _query;
 
-        public NotExistsExpression(TSelectQuery query)
+        public NotExistsPredicate(TSelectQuery query)
         {
             _query = query;
         }

@@ -2,12 +2,12 @@ using SqlDsl.Core.Expressions;
 
 namespace SqlDsl.Core.Predicates
 {
-    public class LikeExpression : PredicateExpression
+    public class LikePredicate : Predicate
     {
         private readonly ColumnExpression<string> _column;
         private readonly string _pattern;
 
-        public LikeExpression(ColumnExpression<string> column, string pattern)
+        public LikePredicate(ColumnExpression<string> column, string pattern)
         {
             _column = column;
             _pattern = pattern;

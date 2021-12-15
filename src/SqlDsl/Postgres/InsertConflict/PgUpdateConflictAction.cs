@@ -8,7 +8,7 @@ namespace SqlDsl.Postgres.InsertConflict
     public class PgUpdateConflictAction : IPgConflictAction
     {
         private readonly List<AssignExpression> _setExpressions;
-        private PredicateExpression _whereClause;
+        private Predicate _whereClause;
 
         public PgUpdateConflictAction()
         {
@@ -26,7 +26,7 @@ namespace SqlDsl.Postgres.InsertConflict
             return this;
         }
 
-        public PgUpdateConflictAction Where(PredicateExpression condition)
+        public PgUpdateConflictAction Where(Predicate condition)
         {
             _whereClause = _whereClause == null
                 ? condition

@@ -1,12 +1,13 @@
-﻿using SqlDsl.Core.Expressions;
+using SqlDsl.Core.Expressions;
 
 namespace SqlDsl.Core.Predicates
 {
-    public sealed class IsNullExpression<T> : PredicateExpression
+    public sealed class IsNotNullPredicate<T> : Predicate
     {
         private readonly Expression<T> _column;
+        
 
-        public IsNullExpression(Expression<T> column)
+        public IsNotNullPredicate(Expression<T> column)
         {
             _column = column;
         }
@@ -14,7 +15,7 @@ namespace SqlDsl.Core.Predicates
         public override void Format(ISqlWriter sql)
         {
             _column.Format(sql);
-            sql.Append(" IS NULL");
+            sql.Append(" IS NOT NULL");
         }
     }
 }

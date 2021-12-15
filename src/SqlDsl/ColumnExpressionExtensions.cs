@@ -5,6 +5,6 @@ namespace SqlDsl
 {
     public static class ColumnExpressionExtensions
     {
-        public static PredicateExpression Like(this ColumnExpression<string> column, string pattern) => new LikeExpression(column, pattern);
+        public static Predicate Like(this ColumnExpression<string> column, string pattern) => new LikePredicate(column, pattern);
     }
 }

@@ -2,12 +2,12 @@ using SqlDsl.Core.Expressions;
 
 namespace SqlDsl.Core.Predicates
 {
-    public sealed class InSubQueryExpression<T> : PredicateExpression
+    public sealed class InSubQueryPredicate<T> : Predicate
     {
         private readonly ColumnExpression<T> _column;
         private readonly SelectQuery<T> _query;
 
-        public InSubQueryExpression(ColumnExpression<T> column, SelectQuery<T> query)
+        public InSubQueryPredicate(ColumnExpression<T> column, SelectQuery<T> query)
         {
             _column = column;
             _query = query;

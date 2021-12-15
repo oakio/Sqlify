@@ -4,7 +4,7 @@ namespace SqlDsl.Core
 {
     public interface IHasWhereClause<out TQuery>
     {
-        TQuery Where(PredicateExpression condition);
+        TQuery Where(Predicate condition);
 
         TQuery WhereExists<TSubQuery>(TSubQuery query) where TSubQuery : SelectQueryBase<TSubQuery>, new();
 

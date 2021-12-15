@@ -18,19 +18,19 @@ namespace SqlDsl.Core.Expressions
                 : string.Concat(tableAlias, ".", unqualifiedName);
         }
 
-        public PredicateExpression In(IReadOnlyCollection<T> items) => new InExpression<T>(this, items);
+        public Predicate In(IReadOnlyCollection<T> items) => new InPredicate<T>(this, items);
 
-        public PredicateExpression NotIn(IReadOnlyCollection<T> items) => new NotInExpression<T>(this, items);
+        public Predicate NotIn(IReadOnlyCollection<T> items) => new NotInPredicate<T>(this, items);
 
-        public PredicateExpression In(SelectQuery<T> query) => new InSubQueryExpression<T>(this, query);
+        public Predicate In(SelectQuery<T> query) => new InSubQueryPredicate<T>(this, query);
 
-        public PredicateExpression NotIn(SelectQuery<T> query) => new NotInSubQueryExpression<T>(this, query);
+        public Predicate NotIn(SelectQuery<T> query) => new NotInSubQueryPredicate<T>(this, query);
 
-        public PredicateExpression Between(T from, T to) => new BetweenExpression<T>(this, from, to);
+        public Predicate Between(T from, T to) => new BetweenPredicate<T>(this, from, to);
 
-        public PredicateExpression IsNull => new IsNullExpression<T>(this);
+        public Predicate IsNull => new IsNullPredicate<T>(this);
 
-        public PredicateExpression IsNotNull => new IsNotNullExpression<T>(this);
+        public Predicate IsNotNull => new IsNotNullPredicate<T>(this);
 
         public CastExpression<TTarget> Cast<TTarget>(string dataType) => new CastExpression<TTarget>(this, dataType);
 

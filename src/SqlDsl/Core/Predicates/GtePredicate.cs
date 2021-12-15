@@ -2,9 +2,9 @@ using SqlDsl.Core.Expressions;
 
 namespace SqlDsl.Core.Predicates
 {
-    public sealed class GteExpression<T> : ComparisonPredicate<T>
+    public sealed class GtePredicate<T> : ComparisonPredicate<T>
     {
-        public GteExpression(Expression<T> left, Expression<T> right) : base(left, right)
+        public GtePredicate(Expression<T> left, Expression<T> right) : base(left, right)
         {
         }
 

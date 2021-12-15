@@ -8,14 +8,14 @@ namespace SqlDsl.Core
     {
         private readonly TableReference _table;
         private List<JoinClause> _joinClauses;
-        private PredicateExpression _whereClause;
+        private Predicate _whereClause;
 
         protected DeleteQueryBase(ITable table)
         {
             _table = new TableReference(table, false);
         }
 
-        public TDeleteQuery Where(PredicateExpression condition)
+        public TDeleteQuery Where(Predicate condition)
         {
             _whereClause = _whereClause == null
                 ? condition
@@ -25,17 +25,17 @@ namespace SqlDsl.Core
 
         public TDeleteQuery WhereExists<TSelectQuery>(TSelectQuery query) where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
         {
-            var condition = new ExistsExpression<TSelectQuery>(query);
+            var condition = new ExistsPredicate<TSelectQuery>(query);
             return Where(condition);
         }
 
         public TDeleteQuery WhereNotExists<TSelectQuery>(TSelectQuery query) where TSelectQuery : SelectQueryBase<TSelectQuery>, new()
         {
-            var condition = new NotExistsExpression<TSelectQuery>(query);
+            var condition = new NotExistsPredicate<TSelectQuery>(query);
             return Where(condition);
         }
 
-        public TDeleteQuery Join(ITable table, PredicateExpression condition)
+        public TDeleteQuery Join(ITable table, Predicate condition)
         {
             var join = new JoinClause(" JOIN ", table, condition);
             ListUtils.Add(ref _joinClauses, join);

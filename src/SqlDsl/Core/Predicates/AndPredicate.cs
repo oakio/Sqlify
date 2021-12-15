@@ -1,11 +1,11 @@
 namespace SqlDsl.Core.Predicates
 {
-    public class AndExpression : PredicateExpression
+    public class AndPredicate : Predicate
     {
-        private readonly PredicateExpression _left;
-        private readonly PredicateExpression _right;
+        private readonly Predicate _left;
+        private readonly Predicate _right;
 
-        public AndExpression(PredicateExpression left, PredicateExpression right)
+        public AndPredicate(Predicate left, Predicate right)
         {
             _left = left;
             _right = right;
@@ -13,9 +13,9 @@ namespace SqlDsl.Core.Predicates
 
         public override void Format(ISqlWriter sql)
         {
-            if (_left is OrExpression)
+            if (_left is OrPredicate)
             {
-                if (_right is OrExpression)
+                if (_right is OrPredicate)
                 {
                     sql.Append("(");
                     _left.Format(sql);
@@ -32,7 +32,7 @@ namespace SqlDsl.Core.Predicates
                 return;
             }
 
-            if (_right is OrExpression)
+            if (_right is OrPredicate)
             {
                 _left.Format(sql);
                 sql.Append(" AND (");
