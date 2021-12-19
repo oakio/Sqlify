@@ -14,7 +14,7 @@ namespace SqlDsl.Core
             _values = new List<IInsertValue>();
         }
 
-        public TInsertQuery Values<T>(ColumnExpression<T> column, T value)
+        public TInsertQuery Values<T>(Column<T> column, T value)
         {
             var insertValue = new InsertValue<T>(column, value);
             _values.Add(insertValue);

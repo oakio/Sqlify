@@ -4,10 +4,10 @@ namespace SqlDsl.Core
 {
     public readonly struct InsertValue<T> : IInsertValue
     {
-        private readonly ColumnExpression<T> _column;
+        private readonly Column<T> _column;
         private readonly T _value;
 
-        public InsertValue(ColumnExpression<T> column, T value)
+        public InsertValue(Column<T> column, T value)
         {
             _column = column;
             _value = value;

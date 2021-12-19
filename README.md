@@ -24,8 +24,8 @@ Fluent SQL builder library.
 // Create model for table Users with columns: Id, Name
 public interface IUsersTable : ITable
 {
-    ColumnExpression<int> Id { get; }
-    ColumnExpression<string> Name { get; }
+    Column<int> Id { get; }
+    Column<string> Name { get; }
 }
 
 var u = Sql.Table<IUsersTable>();
@@ -105,29 +105,29 @@ For these tables create corresponding interfaces:
 public interface IAuthorsTable : ITable
 {
     [Column("id")]
-    ColumnExpression<int> Id { get; }
+    Column<int> Id { get; }
 
     [Column("name")]
-    ColumnExpression<string> Name { get; }
+    Column<string> Name { get; }
 }
 
 [Table("books")]
 public interface IBooksTable : ITable
 {
     [Column("id")]
-    ColumnExpression<int> Id { get; }
+    Column<int> Id { get; }
 
     [Column("name")]
-    ColumnExpression<string> Name { get; }
+    Column<string> Name { get; }
 
     [Column("author_id")]
-    ColumnExpression<int> AuthorId { get; }
+    Column<int> AuthorId { get; }
 
     [Column("rating")]
-    ColumnExpression<double> Rating { get; }
+    Column<double> Rating { get; }
 
     [Column("qty")]
-    ColumnExpression<int> Quantity { get; }
+    Column<int> Quantity { get; }
 }
 ```
 If the names of the columns in the database are the same as the names of the properties in models, then using `TableAttribute` and `ColumnAttrubute` are optional. 
@@ -144,11 +144,11 @@ you can define table like:
 ```csharp
 public interface IAuthorsTable : ITable
 {
-    ColumnExpression<int> Id { get; }
+    Column<int> Id { get; }
 
-    ColumnExpression<int> Name { get; }
+    Column<int> Name { get; }
 
-    ColumnExpression<int> BooksCount { get; }
+    Column<int> BooksCount { get; }
 }
 ```
 [up &#8593;](#examples)

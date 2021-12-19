@@ -62,7 +62,7 @@ namespace SqlDsl.Tests.Core.Predicates
 
         private static Predicate Create(string name, int value)
         {
-            var column = new ColumnExpression<int>(name);
+            var column = new Column<int>(name);
             return column == value;
         }
     }

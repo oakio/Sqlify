@@ -7,9 +7,9 @@ namespace SqlDsl.Tests
     public interface IAuthorsTable : ITable
     {
         [Column("id")]
-        ColumnExpression<int> Id { get; }
+        Column<int> Id { get; }
 
         [Column("name")]
-        ColumnExpression<string> Name { get; }
+        Column<string> Name { get; }
     }
 }

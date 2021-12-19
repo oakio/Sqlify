@@ -89,7 +89,7 @@ namespace SqlDsl.Core
             return Self();
         }
 
-        public TSelectQuery GroupBy<T>(ColumnExpression<T> column)
+        public TSelectQuery GroupBy<T>(Column<T> column)
         {
             ListUtils.Add(ref _groupByClause, column);
             return Self();

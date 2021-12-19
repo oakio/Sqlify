@@ -3,13 +3,13 @@ using SqlDsl.Core.Predicates;
 
 namespace SqlDsl.Core.Expressions
 {
-    public sealed class ColumnExpression<T> : Expression<T>
+    public sealed class Column<T> : Expression<T>
     {
         public readonly string UnqualifiedName;
 
         public readonly string Name;
 
-        public ColumnExpression(string unqualifiedName, string tableAlias = null)
+        public Column(string unqualifiedName, string tableAlias = null)
         {
             UnqualifiedName = unqualifiedName;
 

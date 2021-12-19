@@ -18,6 +18,6 @@ namespace SqlDsl.Core.CodeGen
 
         public string GetAlias() => _alias;
 
-        protected ColumnExpression<T> CreateColumn<T>(string name) => new ColumnExpression<T>(name, _alias ?? _name);
+        protected Column<T> CreateColumn<T>(string name) => new Column<T>(name, _alias ?? _name);
     }
 }

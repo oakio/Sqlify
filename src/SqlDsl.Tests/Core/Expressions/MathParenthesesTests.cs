@@ -7,10 +7,10 @@ namespace SqlDsl.Tests.Core.Expressions
     [TestFixture]
     public class MathParenthesesTests
     {
-        private static readonly ColumnExpression<int> C1 = Create("c1");
-        private static readonly ColumnExpression<int> C2 = Create("c2");
-        private static readonly ColumnExpression<int> C3 = Create("c3");
-        private static readonly ColumnExpression<int> C4 = Create("c4");
+        private static readonly Column<int> C1 = Create("c1");
+        private static readonly Column<int> C2 = Create("c2");
+        private static readonly Column<int> C3 = Create("c3");
+        private static readonly Column<int> C4 = Create("c4");
 
         [TestCaseSource(nameof(Cases))]
         public void Test(string lineNo, BinaryExpression<int> expression, string expected) => expression.ShouldBe(expected);
@@ -61,6 +61,6 @@ namespace SqlDsl.Tests.Core.Expressions
             $"line #{lineNo}", expression, expected
         };
 
-        private static ColumnExpression<int> Create(string name) => new ColumnExpression<int>(name);
+        private static Column<int> Create(string name) => new Column<int>(name);
     }
 }

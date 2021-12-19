@@ -7,18 +7,18 @@ namespace SqlDsl.Tests
     public interface IBooksTable : ITable
     {
         [Column("id")]
-        ColumnExpression<int> Id { get; }
+        Column<int> Id { get; }
 
         [Column("name")]
-        ColumnExpression<string> Name { get; }
+        Column<string> Name { get; }
 
         [Column("author_id")]
-        ColumnExpression<int> AuthorId { get; }
+        Column<int> AuthorId { get; }
 
         [Column("rating")]
-        ColumnExpression<double> Rating { get; }
+        Column<double> Rating { get; }
 
         [Column("qty")]
-        ColumnExpression<int> Quantity { get; }
+        Column<int> Quantity { get; }
     }
 }

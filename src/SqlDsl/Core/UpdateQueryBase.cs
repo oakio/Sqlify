@@ -23,11 +23,11 @@ namespace SqlDsl.Core
             sql.Append(" WHERE ", _whereClause);
         }
 
-        public TUpdateQuery Set<T>(ColumnExpression<T> column, T value) => SetInternal(column, new ParamExpression<T>(value));
+        public TUpdateQuery Set<T>(Column<T> column, T value) => SetInternal(column, new ParamExpression<T>(value));
 
-        public TUpdateQuery Set<T>(ColumnExpression<T> column, Expression<T> value) => SetInternal(column, value);
+        public TUpdateQuery Set<T>(Column<T> column, Expression<T> value) => SetInternal(column, value);
 
-        private TUpdateQuery SetInternal<T>(ColumnExpression<T> left, Expression<T> right)
+        private TUpdateQuery SetInternal<T>(Column<T> left, Expression<T> right)
         {
             var expression = new AssignExpression(left.UnqualifiedName, right);
             _setExpressions.Add(expression);

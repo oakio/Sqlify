@@ -10,7 +10,7 @@ namespace SqlDsl.Tests.Core.Predicates
         [Test]
         public void FormatTests()
         {
-            var column = new ColumnExpression<int>("age");
+            var column = new Column<int>("age");
             var expression = new BetweenPredicate<int>(column, 10, 15);
 
             expression.ShouldBe("age BETWEEN @p1 AND @p2");

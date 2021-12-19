@@ -5,10 +5,10 @@ namespace SqlDsl.Core.Predicates
 {
     public sealed class NotInPredicate<T> : Predicate
     {
-        private readonly ColumnExpression<T> _left;
+        private readonly Column<T> _left;
         private readonly IReadOnlyCollection<T> _right;
 
-        public NotInPredicate(ColumnExpression<T> left, IReadOnlyCollection<T> right)
+        public NotInPredicate(Column<T> left, IReadOnlyCollection<T> right)
         {
             _left = left;
             _right = right;

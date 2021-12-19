@@ -4,11 +4,11 @@ namespace SqlDsl.Core.Predicates
 {
     public sealed class BetweenPredicate<T> : Predicate
     {
-        private readonly ColumnExpression<T> _left;
+        private readonly Column<T> _left;
         private readonly T _from;
         private readonly T _to;
 
-        public BetweenPredicate(ColumnExpression<T> left, T from, T to)
+        public BetweenPredicate(Column<T> left, T from, T to)
         {
             _left = left;
             _from = from;

@@ -4,10 +4,10 @@ namespace SqlDsl.Core.Predicates
 {
     public class LikePredicate : Predicate
     {
-        private readonly ColumnExpression<string> _column;
+        private readonly Column<string> _column;
         private readonly string _pattern;
 
-        public LikePredicate(ColumnExpression<string> column, string pattern)
+        public LikePredicate(Column<string> column, string pattern)
         {
             _column = column;
             _pattern = pattern;

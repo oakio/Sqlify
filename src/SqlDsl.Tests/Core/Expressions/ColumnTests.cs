@@ -5,10 +5,10 @@ using SqlDsl.Core.Expressions;
 namespace SqlDsl.Tests.Core.Expressions
 {
     [TestFixture]
-    public class ColumnExpressionTests
+    public class ColumnTests
     {
-        private static readonly ColumnExpression<int?> Left = new ColumnExpression<int?>("left");
-        private static readonly ColumnExpression<int?> Right = new ColumnExpression<int?>("right");
+        private static readonly Column<int?> Left = new Column<int?>("left");
+        private static readonly Column<int?> Right = new Column<int?>("right");
 
         [TestCaseSource(nameof(Cases))]
         public void Column_expressions_test(ISqlFormattable expression, string expected) => expression.ShouldBe(expected);

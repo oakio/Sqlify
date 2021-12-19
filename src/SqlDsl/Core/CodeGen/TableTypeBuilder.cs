@@ -69,7 +69,7 @@ namespace SqlDsl.Core.CodeGen
                 BindingFlags.Instance |
                 BindingFlags.NonPublic);
 
-            Type columnGenericType = typeof(ColumnExpression<>);
+            Type columnGenericType = typeof(Column<>);
 
             PropertyInfo[] properties = interfaceType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (PropertyInfo property in properties)

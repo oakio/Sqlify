@@ -4,10 +4,10 @@ namespace SqlDsl.Core.Predicates
 {
     public sealed class NotInSubQueryPredicate<T> : Predicate
     {
-        private readonly ColumnExpression<T> _column;
+        private readonly Column<T> _column;
         private readonly SelectQuery<T> _query;
 
-        public NotInSubQueryPredicate(ColumnExpression<T> column, SelectQuery<T> query)
+        public NotInSubQueryPredicate(Column<T> column, SelectQuery<T> query)
         {
             _column = column;
             _query = query;

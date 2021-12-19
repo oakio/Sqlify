@@ -15,11 +15,11 @@ namespace SqlDsl.Postgres.InsertConflict
             _setExpressions = new List<AssignExpression>();
         }
 
-        public PgUpdateConflictAction Set<T>(ColumnExpression<T> column, T value) => SetInternal(column, new ParamExpression<T>(value));
+        public PgUpdateConflictAction Set<T>(Column<T> column, T value) => SetInternal(column, new ParamExpression<T>(value));
 
-        public PgUpdateConflictAction Set<T>(ColumnExpression<T> column, Expression<T> value) => SetInternal(column, value);
+        public PgUpdateConflictAction Set<T>(Column<T> column, Expression<T> value) => SetInternal(column, value);
 
-        private PgUpdateConflictAction SetInternal<T>(ColumnExpression<T> left, Expression<T> right)
+        private PgUpdateConflictAction SetInternal<T>(Column<T> left, Expression<T> right)
         {
             var expression = new AssignExpression(left.UnqualifiedName, right);
             _setExpressions.Add(expression);

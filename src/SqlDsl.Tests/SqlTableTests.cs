@@ -57,7 +57,7 @@ namespace SqlDsl.Tests
 
         private static void AssertThrowException<T>() where T : ITable => Assert.Throws<InvalidOperationException>(() => Sql.Table<T>());
 
-        private static void AssertColumn<T>(ColumnExpression<T> column, string unqualifiedName, string name)
+        private static void AssertColumn<T>(Column<T> column, string unqualifiedName, string name)
         {
             Assert.That(column, Is.Not.Null);
             Assert.That(column.UnqualifiedName, Is.EqualTo(unqualifiedName));
@@ -70,7 +70,7 @@ namespace SqlDsl.Tests
 
         public interface IPropertyWithSetterInterfaceTable : ITable
         {
-            ColumnExpression<int> Id { get; set; }
+            Column<int> Id { get; set; }
         }
 
         public interface IUnexpectedColumnTypeInterfaceTable : ITable
@@ -93,18 +93,18 @@ namespace SqlDsl.Tests
         [Table("foo")]
         public interface IFooTable : ITable
         {
-            ColumnExpression<int> Id { get; }
+            Column<int> Id { get; }
 
             [Column("user_name")]
-            ColumnExpression<string> UserName { get; }
+            Column<string> UserName { get; }
         }
 
         public interface IBarTable : ITable
         {
-            ColumnExpression<int> Id { get; }
+            Column<int> Id { get; }
 
             [Column("user_name")]
-            ColumnExpression<string> UserName { get; }
+            Column<string> UserName { get; }
         }
     }
 }
