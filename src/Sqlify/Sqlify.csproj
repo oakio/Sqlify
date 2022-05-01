@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Authors>Ilya Dubadenko</Authors>
+    <Description>Fluent SQL builder</Description>
+    <Copyright>Copyright (c) 2021</Copyright>
+    <PackageId>Sqlify</PackageId>
+    <PackageTags>sqlbuilder;fluentsql;sql</PackageTags>
+    <PackageProjectUrl>https://github.com/oakio/sqlify</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/oakio/sqlify</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AssemblyName>Sqlify</AssemblyName>
+    <RootNamespace>Sqlify</RootNamespace>
+    <NoWarn>7035;1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Codestellation.Cepheid" Version="0.1.6" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
