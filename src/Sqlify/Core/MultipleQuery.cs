@@ -4,14 +4,14 @@ namespace Sqlify.Core
 {
     public sealed class MultipleQuery : IQuery
     {
-        private readonly List<ISelectQuery> _queries;
+        private readonly List<IQuery> _queries;
 
-        public MultipleQuery(params ISelectQuery[] queries)
+        public MultipleQuery(params IQuery[] queries)
         {
-            _queries = new List<ISelectQuery>(queries);
+            _queries = new List<IQuery>(queries);
         }
 
-        public void Add(ISelectQuery query) => _queries.Add(query);
+        public void Add(IQuery query) => _queries.Add(query);
 
         public void Format(ISqlWriter sql) => sql.Append("; ", _queries);
     }
