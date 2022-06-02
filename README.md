@@ -36,10 +36,10 @@ var insertQuery = Sql
     .Values(u.Id, 1)
     .Values(u.Name, "Alex");
 
-// SELECT * FRO Users
+// SELECT * FROM Users
 var selectQuery = Sql
     .Select()
-    .From(b);
+    .From(u);
 
 // UPDATE Users SET Name = @p1 WHERE Users.Id = @p2
 var updateQuery = Sql
