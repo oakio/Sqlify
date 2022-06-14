@@ -21,7 +21,7 @@ namespace Sqlify
 
         public static DeleteQuery Delete(ITable table) => new DeleteQuery(table);
 
-        public static MultipleQuery Multiple(params ISelectQuery[] queries) => new MultipleQuery(queries);
+        public static MultipleQuery Multiple(params IQuery[] queries) => new MultipleQuery(queries);
 
         public static Predicate Or(Predicate left, Predicate right) => new OrPredicate(left, right);
 
