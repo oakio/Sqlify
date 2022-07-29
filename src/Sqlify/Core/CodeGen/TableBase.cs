@@ -18,6 +18,6 @@ namespace Sqlify.Core.CodeGen
 
         public string GetAlias() => _alias;
 
-        protected Column<T> CreateColumn<T>(string name) => new Column<T>(name, _alias ?? _name);
+        protected Column<T> CreateColumn<T>(string name, string query) => new Column<T>(name, _alias ?? _name, query);
     }
 }

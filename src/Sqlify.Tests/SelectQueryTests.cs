@@ -390,7 +390,7 @@ namespace Sqlify.Tests
                     u
                 );
 
-            query.ShouldBe("SELECT u.id FROM (SELECT * FROM users) u");
+            query.ShouldBe("SELECT id::varchar FROM (SELECT * FROM users) u");
         }
 
         [Test]
@@ -484,7 +484,7 @@ namespace Sqlify.Tests
                 .Select(u.Id.As("UserId"))
                 .From(u);
 
-            query.ShouldBe("SELECT users.id AS UserId FROM users");
+            query.ShouldBe("SELECT id::varchar AS UserId FROM users");
         }
 
         [Test]
@@ -496,7 +496,7 @@ namespace Sqlify.Tests
                 .Select(u.Id.As("UserId"))
                 .From(u);
 
-            query.ShouldBe("SELECT u.id AS UserId FROM users u");
+            query.ShouldBe("SELECT id::varchar AS UserId FROM users u");
         }
 
         [Test]
@@ -554,7 +554,7 @@ namespace Sqlify.Tests
                 .From(u)
                 .Where(u.Age > 40);
 
-            query.ShouldBe("SELECT users.id FROM users WHERE users.age < @p1 UNION ALL SELECT users.id FROM users WHERE users.age > @p2");
+            query.ShouldBe("SELECT id::varchar FROM users WHERE users.age < @p1 UNION ALL SELECT id::varchar FROM users WHERE users.age > @p2");
         }
 
         [Test]

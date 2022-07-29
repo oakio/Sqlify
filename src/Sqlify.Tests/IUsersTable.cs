@@ -6,7 +6,7 @@ namespace Sqlify.Tests
     [Table("users")]
     public interface IUsersTable : ITable
     {
-        [Column("id")]
+        [Column("id", "id::varchar")]
         Column<int> Id { get; }
 
         [Column("name")]
