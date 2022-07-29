@@ -6,6 +6,7 @@ namespace Sqlify
     public sealed class ColumnAttribute : Attribute
     {
         public string Name { get; }
+        public string Query { get; }
 
         public ColumnAttribute(string name)
         {
@@ -14,6 +15,16 @@ namespace Sqlify
                 throw new ArgumentNullException(nameof(name));
             }
             Name = name;
+        }
+
+        public ColumnAttribute(string name, string query)
+        {
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(query))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            Name = name;
+            Query = query;
         }
     }
 }

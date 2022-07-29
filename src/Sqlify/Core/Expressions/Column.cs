@@ -8,14 +8,18 @@ namespace Sqlify.Core.Expressions
         public readonly string UnqualifiedName;
 
         public readonly string Name;
+        public readonly string Query;
 
-        public Column(string unqualifiedName, string tableAlias = null)
+        public Column(string unqualifiedName, string tableAlias = null, string query = null)
         {
             UnqualifiedName = unqualifiedName;
-
             Name = string.IsNullOrEmpty(tableAlias)
                 ? unqualifiedName
                 : string.Concat(tableAlias, ".", unqualifiedName);
+
+            Query = string.IsNullOrEmpty(query)
+                ? Name
+                : query;
         }
 
         public Predicate In(IReadOnlyCollection<T> items) => new InPredicate<T>(this, items);
@@ -34,6 +38,6 @@ namespace Sqlify.Core.Expressions
 
         public CastExpression<TTarget> Cast<TTarget>(string dataType) => new CastExpression<TTarget>(this, dataType);
 
-        public override void Format(ISqlWriter sql) => sql.Append(Name);
+        public override void Format(ISqlWriter sql) => sql.Append(Query);
     }
 }

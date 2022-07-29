@@ -10,7 +10,10 @@ namespace Sqlify.Core.CodeGen
 
         public static TTable Create(string alias)
         {
-            _factory ??= BuildFactory();
+            if (_factory is null)
+            {
+                _factory = BuildFactory();
+            }
 
             return _factory(alias);
         }
