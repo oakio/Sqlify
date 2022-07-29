@@ -28,6 +28,17 @@ namespace Sqlify.Tests
 
             query.ShouldBe("SELECT * FROM users u");
         }
+        [Test]
+        public void Select_with_custom_query_from_table_alias()
+        {
+            var u = Sql.Table<IUsersTable>("u");
+
+            SelectQuery<string> query = Sql
+                .Select(u.LastName)
+                .From(u);
+
+            query.ShouldBe("SELECT last_name::varchar FROM users u");
+        }
 
         [Test]
         public void Select_column_from_table()
@@ -390,7 +401,7 @@ namespace Sqlify.Tests
                     u
                 );
 
-            query.ShouldBe("SELECT id::varchar FROM (SELECT * FROM users) u");
+            query.ShouldBe("SELECT u.id FROM (SELECT * FROM users) u");
         }
 
         [Test]
@@ -484,7 +495,7 @@ namespace Sqlify.Tests
                 .Select(u.Id.As("UserId"))
                 .From(u);
 
-            query.ShouldBe("SELECT id::varchar AS UserId FROM users");
+            query.ShouldBe("SELECT users.id AS UserId FROM users");
         }
 
         [Test]
@@ -496,7 +507,7 @@ namespace Sqlify.Tests
                 .Select(u.Id.As("UserId"))
                 .From(u);
 
-            query.ShouldBe("SELECT id::varchar AS UserId FROM users u");
+            query.ShouldBe("SELECT u.id AS UserId FROM users u");
         }
 
         [Test]
@@ -554,7 +565,7 @@ namespace Sqlify.Tests
                 .From(u)
                 .Where(u.Age > 40);
 
-            query.ShouldBe("SELECT id::varchar FROM users WHERE users.age < @p1 UNION ALL SELECT id::varchar FROM users WHERE users.age > @p2");
+            query.ShouldBe("SELECT users.id FROM users WHERE users.age < @p1 UNION ALL SELECT users.id FROM users WHERE users.age > @p2");
         }
 
         [Test]
