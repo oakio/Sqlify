@@ -28,6 +28,17 @@ namespace Sqlify.Tests
 
             query.ShouldBe("SELECT * FROM users u");
         }
+        [Test]
+        public void Select_with_custom_query_from_table_alias()
+        {
+            var u = Sql.Table<IUsersTable>("u");
+
+            SelectQuery<string> query = Sql
+                .Select(u.LastName)
+                .From(u);
+
+            query.ShouldBe("SELECT last_name::varchar FROM users u");
+        }
 
         [Test]
         public void Select_column_from_table()
