@@ -39,6 +39,12 @@ namespace Sqlify
 
         public static FunctionExpression<T> Coalesce<T>(params Expression<T>[] columns) => Create("COALESCE", columns);
 
+        public static FunctionExpression<T> NullIf<T>(Expression<T> left, Expression<T> right) => Create("NULLIF", new[]
+        {
+            left,
+            right
+        });
+
         private static FunctionExpression<T> Create<T>(string name, Expression<T> arg) => new FunctionExpression<T>(name, arg);
 
         private static FunctionExpression<T> Create<T>(string name, Expression<T>[] args) => new FunctionExpression<T>(name, args);

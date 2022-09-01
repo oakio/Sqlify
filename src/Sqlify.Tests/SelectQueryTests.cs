@@ -719,5 +719,29 @@ namespace Sqlify.Tests
 
             query.ShouldBe("SELECT COALESCE(b.name, @p1) FROM books b");
         }
+
+        [Test]
+        public void Select_nullif_from_table()
+        {
+            var b = Sql.Table<IBooksTable>();
+
+            SelectQuery<string> query = Sql
+                .Select(Sql.NullIf(b.Name, "n/a"))
+                .From(b);
+
+            query.ShouldBe("SELECT NULLIF(books.name, @p1) FROM books");
+        }
+
+        [Test]
+        public void Select_nullif_from_table_alias()
+        {
+            var b = Sql.Table<IBooksTable>("b");
+
+            SelectQuery<string> query = Sql
+                .Select(Sql.NullIf(b.Name, "n/a"))
+                .From(b);
+
+            query.ShouldBe("SELECT NULLIF(b.name, @p1) FROM books b");
+        }
     }
 }
