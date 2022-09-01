@@ -10,6 +10,13 @@ namespace Sqlify.Core.CodeGen
     {
         private static readonly ModuleBuilder Builder;
 
+        private static readonly Type BaseTableType = typeof(TableBase);
+
+        private static readonly MethodInfo CreateColumnMethod = BaseTableType.GetMethod(
+            "CreateColumn",
+            BindingFlags.Instance |
+            BindingFlags.NonPublic);
+
         private const string RootName = "Sqlify.CodeGen";
 
         static TableTypeBuilder()
@@ -38,18 +45,17 @@ namespace Sqlify.Core.CodeGen
                 throw new InvalidOperationException($"Interface {interfaceType} must contains properties only");
             }
 
-            string name = $"{RootName}.Table_{interfaceType.Name}";
-            Type baseType = typeof(TableBase);
+            string tableClassName = $"{RootName}.Table_{interfaceType.Name}";
 
             TypeBuilder typeBuilder = Builder.DefineType(
-                name,
+                tableClassName,
                 TypeAttributes.Public |
                 TypeAttributes.Class |
                 TypeAttributes.AutoClass |
                 TypeAttributes.AnsiClass |
                 TypeAttributes.BeforeFieldInit |
                 TypeAttributes.AutoLayout,
-                baseType,
+                BaseTableType,
                 new[] { interfaceType });
 
             ConstructorBuilder ctorBuilder = typeBuilder.DefineConstructor(
@@ -62,14 +68,7 @@ namespace Sqlify.Core.CodeGen
 
             string tableName = TableNameResolver.Resolve(interfaceType);
 
-            EmitBaseCtorCall(ctorCode, baseType, tableName);
-
-            MethodInfo createColumnMethod = baseType.GetMethod(
-                "CreateColumn",
-                BindingFlags.Instance |
-                BindingFlags.NonPublic);
-
-            Type columnGenericType = typeof(Column<>);
+            EmitBaseCtorCall(ctorCode, tableName);
 
             PropertyInfo[] properties = interfaceType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (PropertyInfo property in properties)
@@ -82,46 +81,13 @@ namespace Sqlify.Core.CodeGen
                     throw new InvalidOperationException($"Unexpected setter for property {interfaceType}.{propertyName}");
                 }
 
-                if (!propertyType.IsGenericType ||
-                    propertyType.GetGenericTypeDefinition() != columnGenericType)
+                if (IsGenericType(propertyType, typeof(Column<>)))
                 {
-                    throw new InvalidOperationException($"Unsupported property {interfaceType}.{propertyName} type. Expected {columnGenericType}");
+                    EmitColumn(typeBuilder, property, ctorCode);
+                    continue;
                 }
 
-                Type columnType = propertyType.GetGenericArguments()[0];
-                
-                FieldBuilder fieldBuilder = typeBuilder.DefineField(
-                    $"_{propertyName}",
-                    propertyType,
-                    FieldAttributes.Private);
-
-                PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
-                    propertyName,
-                    PropertyAttributes.HasDefault,
-                    propertyType,
-                    null);
-
-                MethodBuilder getMethod = typeBuilder.DefineMethod(
-                    $"get_{propertyName}",
-                    MethodAttributes.Public |
-                    MethodAttributes.Final |
-                    MethodAttributes.SpecialName |
-                    MethodAttributes.HideBySig |
-                    MethodAttributes.NewSlot |
-                    MethodAttributes.Virtual,
-                    propertyType,
-                    Type.EmptyTypes);
-
-                var getMethodCode = getMethod.GetILGenerator();
-                getMethodCode.Emit(OpCodes.Ldarg_0);
-                getMethodCode.Emit(OpCodes.Ldfld, fieldBuilder);
-                getMethodCode.Emit(OpCodes.Ret);
-
-                propertyBuilder.SetGetMethod(getMethod);
-
-                string columnName = GetColumnName(property);
-
-                EmitInitColumnField(ctorCode, createColumnMethod, columnType, columnName,  fieldBuilder);
+                throw new InvalidOperationException($"Unsupported property {interfaceType}.{propertyName} type");
             }
 
             ctorCode.Emit(OpCodes.Ret);
@@ -129,9 +95,54 @@ namespace Sqlify.Core.CodeGen
             return typeBuilder.CreateTypeInfo();
         }
 
-        private static void EmitBaseCtorCall(ILGenerator ctorCode, Type baseType, string tableName)
+        private static bool IsGenericType(Type type, Type openGenericType) =>
+            type.IsGenericType &&
+            type.GetGenericTypeDefinition() == openGenericType;
+
+        private static void EmitColumn(TypeBuilder typeBuilder, PropertyInfo property, ILGenerator ctorCode)
         {
-            ConstructorInfo baseCtor = baseType.GetConstructor(
+            string propertyName = property.Name;
+            Type propertyType = property.PropertyType;
+
+            Type columnType = propertyType.GetGenericArguments()[0];
+
+            FieldBuilder fieldBuilder = typeBuilder.DefineField(
+                $"_{propertyName}",
+                propertyType,
+                FieldAttributes.Private);
+
+            PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
+                propertyName,
+                PropertyAttributes.HasDefault,
+                propertyType,
+                null);
+
+            MethodBuilder getMethod = typeBuilder.DefineMethod(
+                $"get_{propertyName}",
+                MethodAttributes.Public |
+                MethodAttributes.Final |
+                MethodAttributes.SpecialName |
+                MethodAttributes.HideBySig |
+                MethodAttributes.NewSlot |
+                MethodAttributes.Virtual,
+                propertyType,
+                Type.EmptyTypes);
+
+            ILGenerator getMethodCode = getMethod.GetILGenerator();
+            getMethodCode.Emit(OpCodes.Ldarg_0);
+            getMethodCode.Emit(OpCodes.Ldfld, fieldBuilder);
+            getMethodCode.Emit(OpCodes.Ret);
+
+            propertyBuilder.SetGetMethod(getMethod);
+
+            string columnName = GetColumnName(property);
+
+            EmitInitColumnField(ctorCode, columnType, columnName, fieldBuilder);
+        }
+
+        private static void EmitBaseCtorCall(ILGenerator ctorCode, string tableName)
+        {
+            ConstructorInfo baseCtor = BaseTableType.GetConstructor(
                 BindingFlags.NonPublic | BindingFlags.Instance,
                 null,
                 new[]
@@ -155,10 +166,9 @@ namespace Sqlify.Core.CodeGen
                 : property.Name;
         }
 
-        private static void EmitInitColumnField(ILGenerator code, MethodInfo createColumnMethod, Type columnType, string arg, FieldInfo field)
+        private static void EmitInitColumnField(ILGenerator code, Type columnType, string arg, FieldInfo field)
         {
-            MethodInfo method = createColumnMethod.MakeGenericMethod(columnType);
-
+            MethodInfo method = CreateColumnMethod.MakeGenericMethod(columnType);
             code.Emit(OpCodes.Ldarg_0);
             code.Emit(OpCodes.Ldarg_0);
             code.Emit(OpCodes.Ldstr, arg);
