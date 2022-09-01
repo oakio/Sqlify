@@ -59,6 +59,8 @@ namespace Sqlify.Core.Expressions
 
         public static BinaryExpression<T> operator /(Expression<T> left, T right) => new DivExpression<T>(left, AsParam(right));
 
+        public static implicit operator Expression<T>(T value) => AsParam(value);
+
         private static ParamExpression<T> AsParam(T value) => new ParamExpression<T>(value);
     }
 }

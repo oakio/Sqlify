@@ -10,7 +10,7 @@ Fluent SQL builder library.
 * `SELECT`, `DELETE`, `INSERT`, `UPDATE` queries
 * `WHERE`, `JOIN`, `ORDER BY`, `GROUP BY`, `HAVING BY` clauses
 * `LIKE`, `EXISTS`, `IN`, `BETWEEN` predicates
-* `COUNT`, `SUM`, `MAX`, `MIN`, `AVG`, `CAST` functions
+* `COUNT`, `SUM`, `MAX`, `MIN`, `AVG`, `CAST`, `COALESCE` functions
 * `UNION` queries
 * Multiple queries
 * Table and Column aliases
@@ -203,6 +203,14 @@ var query = Sql
     .From(b);
 
 // SELECT CAST(b.rating AS INTEGER) FROM books b
+```
+```csharp
+var b = Sql.Table<IBooksTable>("b");
+var query = Sql
+    .Select(Sql.Coalesce(b.Name, "n/a"))
+    .From(b);
+
+// SELECT COALESCE(b.name, @p1) FROM books b
 ```
 [up &#8593;](#examples)
 ## Computed column

@@ -37,6 +37,10 @@ namespace Sqlify
 
         public static FunctionExpression<T> Sum<T>(Expression<T> column) => Create("SUM", column);
 
+        public static FunctionExpression<T> Coalesce<T>(params Expression<T>[] columns) => Create("COALESCE", columns);
+
         private static FunctionExpression<T> Create<T>(string name, Expression<T> arg) => new FunctionExpression<T>(name, arg);
+
+        private static FunctionExpression<T> Create<T>(string name, Expression<T>[] args) => new FunctionExpression<T>(name, args);
     }
 }
