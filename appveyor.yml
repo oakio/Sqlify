@@ -23,4 +23,4 @@ deploy:
     on:
       branch: master
     api_key:
-      secure: Socnt0PiX/lB6LKCbBiaugOIb+kkJ0yTZzlp6VgVmIc3Xi26ngcyixogTux/9nvU
+      secure: Ursv3xUC5uIU3gNlDSgqpoF1pPfBYUTKFvz80rcSQZNF7s8VIoJ8xCiY7KQHiMja
