@@ -17,6 +17,11 @@ namespace Sqlify.Core.CodeGen
             BindingFlags.Instance |
             BindingFlags.NonPublic);
 
+        private static readonly MethodInfo CreateComputedColumnMethod = BaseTableType.GetMethod(
+            "CreateComputedColumn",
+            BindingFlags.Instance |
+            BindingFlags.NonPublic);
+
         private const string RootName = "Sqlify.CodeGen";
 
         static TableTypeBuilder()
@@ -87,6 +92,12 @@ namespace Sqlify.Core.CodeGen
                     continue;
                 }
 
+                if (IsGenericType(propertyType, typeof(Expression<>)))
+                {
+                    EmitExpressionColumn(typeBuilder, property);
+                    continue;
+                }
+
                 throw new InvalidOperationException($"Unsupported property {interfaceType}.{propertyName} type");
             }
 
@@ -138,6 +149,50 @@ namespace Sqlify.Core.CodeGen
             string columnName = GetColumnName(property);
 
             EmitInitColumnField(ctorCode, columnType, columnName, fieldBuilder);
+        }
+
+        private static void EmitExpressionColumn(TypeBuilder typeBuilder, PropertyInfo property)
+        {
+            string propertyName = property.Name;
+            Type propertyType = property.PropertyType;
+            MethodInfo expressionMethod = property.GetMethod;
+
+            Type columnType = propertyType.GetGenericArguments()[0];
+
+            PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
+                propertyName,
+                PropertyAttributes.HasDefault,
+                propertyType,
+                null);
+
+            MethodBuilder getMethod = typeBuilder.DefineMethod(
+                $"get_{propertyName}",
+                MethodAttributes.Public |
+                MethodAttributes.Final |
+                MethodAttributes.SpecialName |
+                MethodAttributes.HideBySig |
+                MethodAttributes.NewSlot |
+                MethodAttributes.Virtual,
+                propertyType,
+                Type.EmptyTypes);
+
+            MethodInfo method = CreateComputedColumnMethod.MakeGenericMethod(columnType);
+
+            string columnName = GetColumnName(property);
+
+            ILGenerator getMethodCode = getMethod.GetILGenerator();
+            getMethodCode.Emit(OpCodes.Ldarg_0);
+            getMethodCode.Emit(OpCodes.Ldstr, columnName);
+            getMethodCode.Emit(OpCodes.Ldarg_0);
+            getMethodCode.Emit(OpCodes.Call, expressionMethod);
+            getMethodCode.EmitCall(OpCodes.Call, method, new[]
+            {
+                typeof(string),
+                typeof(Expression<>).MakeGenericType(columnType)
+            });
+            getMethodCode.Emit(OpCodes.Ret);
+
+            propertyBuilder.SetGetMethod(getMethod);
         }
 
         private static void EmitBaseCtorCall(ILGenerator ctorCode, string tableName)

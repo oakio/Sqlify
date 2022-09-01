@@ -58,6 +58,7 @@ var deleteQuery = Sql
 * `SELECT` query
     * [Aliases](#aliases)
     * [Functions](#functions)
+    * [Computed column](#computed-column)
     * [`DISTINCT`](#distinct)
     * `WHERE` clause
         * [Predicates](#predicates) (`AND`, `OR`, `IS NULL` and others)
@@ -202,6 +203,35 @@ var query = Sql
     .From(b);
 
 // SELECT CAST(b.rating AS INTEGER) FROM books b
+```
+[up &#8593;](#examples)
+## Computed column
+Define a table `orders` with computed column `total` = `qty` * `price`:
+```csharp
+[Table("orders")]
+public interface IOrder : ITable
+{
+    [Column("id")]
+    Column<int> Id { get; }
+
+    [Column("qty")]
+    Column<int> Qty { get; }
+
+    [Column("price")]
+    Column<int> Price { get; }
+
+    [Column("total")]
+    Expression<int> Total => Qty * Price; // <- computed column
+}
+```
+```csharp
+var o = Sql.Table<IOrder>("o");
+
+var query = Sql
+    .Select(o.Id, o.Total)
+    .From(o);
+
+// SELECT o.id, o.qty * o.price AS total FROM orders o
 ```
 [up &#8593;](#examples)
 ## DISTINCT

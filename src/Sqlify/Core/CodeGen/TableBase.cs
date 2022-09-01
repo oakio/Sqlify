@@ -19,5 +19,7 @@ namespace Sqlify.Core.CodeGen
         public string GetAlias() => _alias;
 
         protected Column<T> CreateColumn<T>(string name) => new Column<T>(name, _alias ?? _name);
+
+        protected Expression<T> CreateComputedColumn<T>(string name, Expression<T> expression) => expression.As(name);
     }
 }
