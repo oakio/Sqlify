@@ -132,8 +132,8 @@ namespace Sqlify.Core
             sql.Append(_joinClauses);
             sql.Append(" WHERE ", _whereClause);
             sql.Append(" GROUP BY ", ", ", _groupByClause);
-            sql.Append(" ORDER BY ", ", ", _orderByClause);
             sql.Append(" HAVING ", _havingClause);
+            sql.Append(" ORDER BY ", ", ", _orderByClause);
         }
 
         private void AppendSelectFrom(ISqlWriter sql)

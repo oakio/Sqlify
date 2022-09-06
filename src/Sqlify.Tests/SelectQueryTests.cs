@@ -743,5 +743,51 @@ namespace Sqlify.Tests
 
             query.ShouldBe("SELECT NULLIF(b.name, @p1) FROM books b");
         }
+
+        [Test]
+        public void Select_from_table_join_where_group_by_having_order_by()
+        {
+            var a = Sql.Table<IAuthorsTable>();
+            var b = Sql.Table<IBooksTable>();
+
+            SelectQuery query = Sql
+                .Select(
+                    a.Id,
+                    Sql.Count())
+                .From(a)
+                .Join(b, b.AuthorId == a.Id)
+                .Where(b.Rating > 2.0)
+                .Having(Sql.Count() >= 3)
+                .OrderByDesc(Sql.Count());
+
+            query.ShouldBe("SELECT authors.id, COUNT(*) FROM authors " +
+                           "JOIN books ON books.author_id = authors.id " +
+                           "WHERE books.rating > @p1 " +
+                           "HAVING COUNT(*) >= @p2 " +
+                           "ORDER BY COUNT(*) DESC");
+        }
+
+        [Test]
+        public void Select_from_table_alias_join_where_group_by_having_order_by()
+        {
+            var a = Sql.Table<IAuthorsTable>("a");
+            var b = Sql.Table<IBooksTable>("b");
+
+            SelectQuery query = Sql
+                .Select(
+                    a.Id,
+                    Sql.Count())
+                .From(a)
+                .Join(b, b.AuthorId == a.Id)
+                .Where(b.Rating > 2.0)
+                .Having(Sql.Count() >= 3)
+                .OrderByDesc(Sql.Count());
+
+            query.ShouldBe("SELECT a.id, COUNT(*) FROM authors a " +
+                           "JOIN books b ON b.author_id = a.id " +
+                           "WHERE b.rating > @p1 " +
+                           "HAVING COUNT(*) >= @p2 " +
+                           "ORDER BY COUNT(*) DESC");
+        }
     }
 }
