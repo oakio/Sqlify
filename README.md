@@ -21,36 +21,38 @@ Fluent SQL builder library.
 
 # Getting started
 ```csharp
-// Create model for table Users with columns: Id, Name
-public interface IUsersTable : ITable
+// Create model for table Books with columns: Id, AuthorId, Rating
+public interface IBooks : ITable
 {
-    Column<int> Id { get; }
-    Column<string> Name { get; }
+    public Column<int> Id { get; }
+    public Column<int> AuthorId { get; }
+    public Column<double> Rating { get; }
 }
 
-var u = Sql.Table<IUsersTable>();
+// Create model for table Authors with columns: Id, Name
+public interface IAuthors : ITable
+{
+    public Column<int> Id { get; }
+    public Column<int> Name { get; }
+}
 
-// INSERT INTO Users (Id, Name) VALUES (@p1, @p2)
-var insertQuery = Sql
-    .Insert(u)
-    .Values(u.Id, 1)
-    .Values(u.Name, "Alex");
+var a = Sql.Table<IAuthors>("a");
+var b = Sql.Table<IBooks>("b");
 
-// SELECT * FROM Users
 var selectQuery = Sql
-    .Select()
-    .From(u);
+    .Select(a.Id, Sql.Count().As("Count"))
+    .From(a)
+    .Join(b, b.AuthorId == a.Id)
+    .Where(b.Rating > 2.0)
+    .Having(Sql.Count() >= 3)
+    .OrderByDesc(Sql.Count());
 
-// UPDATE Users SET Name = @p1 WHERE Users.Id = @p2
-var updateQuery = Sql
-    .Update(u)
-    .Set(u.Name, "John")
-    .Where(u.Id == 1);
-
-// DELETE FROM Users WHERE Users.Id = @p1
-var deleteQuery = Sql
-    .Delete(u)
-    .Where(u.Id == 1);
+// SELECT a.Id, COUNT(*) AS Count
+// FROM Authors a 
+// JOIN Books b ON b.AuthorId = a.Id 
+// WHERE b.Rating > @p1 
+// HAVING COUNT(*) >= @p2 
+// ORDER BY COUNT(*) DESC
 ```
 
 # Examples
