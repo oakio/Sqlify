@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Sqlify.Core;
 using Sqlify.Core.CodeGen;
@@ -46,6 +48,21 @@ namespace Sqlify.Tests
             AssertThrowException<UnexpectedTypeTable>();
         }
 
+        [Test]
+        public void Should_be_thread_safe()
+        {
+            Task[] tasks = Enumerable
+                .Range(0, 4)
+                .Select(_ => Task.Run(() =>
+                {
+                    Sql.Table<IFooTable>();
+                    Sql.Table<IBarTable>();
+                }))
+                .ToArray();
+
+            Assert.DoesNotThrow(() => Task.WaitAll(tasks));
+        }
+
         private static void AssertTable(object table, string name, string alias)
         {
             var tableBase = (TableBase)table;
@@ -55,7 +72,7 @@ namespace Sqlify.Tests
             Assert.That(tableBase.GetAlias(), Is.EqualTo(alias));
         }
 
-        private static void AssertThrowException<T>() where T : ITable => Assert.Throws<InvalidOperationException>(() => Sql.Table<T>());
+        private static void AssertThrowException<T>() where T : ITable => Assert.Throws<TypeInitializationException>(() => Sql.Table<T>());
 
         private static void AssertColumn<T>(Column<T> column, string unqualifiedName, string name)
         {

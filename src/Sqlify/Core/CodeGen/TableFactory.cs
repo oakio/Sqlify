@@ -6,14 +6,9 @@ namespace Sqlify.Core.CodeGen
 {
     public static class TableFactory<TTable>
     {
-        private static Func<string, TTable> _factory;
+        private static readonly Func<string, TTable> Factory = BuildFactory();
 
-        public static TTable Create(string alias)
-        {
-            _factory ??= BuildFactory();
-
-            return _factory(alias);
-        }
+        public static TTable Create(string alias) => Factory(alias);
 
         private static Func<string, TTable> BuildFactory()
         {
